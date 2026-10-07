@@ -23,7 +23,7 @@ import { MessageWall } from "@/components/messages/message-wall";
 import { ChatHeader, ChatHeaderBlock } from "@/app/parts/chat-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE, COMPACTION_ENABLED, COMPACTION_TOKEN_THRESHOLD, COMPACTION_SHOW_CONTEXT_MEMORY, MAX_MESSAGE_TEXT_LENGTH } from "@/config";
+import { AI_NAME, AI_TAGLINE, STARTER_PROMPTS, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE, COMPACTION_ENABLED, COMPACTION_TOKEN_THRESHOLD, COMPACTION_SHOW_CONTEXT_MEMORY, MAX_MESSAGE_TEXT_LENGTH } from "@/config";
 import Image from "next/image";
 import Link from "next/link";
 import { ConversationSidebar } from "@/components/conversation-sidebar";
@@ -191,6 +191,16 @@ export default function Chat() {
     form.reset();
   }
 
+  // Starter prompts show only on a fresh chat (welcome message alone).
+  const showStarters =
+    status === "ready" &&
+    messages.length === 1 &&
+    messages[0].id.startsWith("welcome-");
+
+  function sendStarter(prompt: string) {
+    sendMessage({ text: prompt });
+  }
+
   function switchConversation(id: string) {
     setActiveConvId(id);
     const data = loadConversationData(id);
@@ -320,7 +330,12 @@ export default function Chat() {
                 <PanelLeft className="size-4" />
               </Button>
             </ChatHeaderBlock>
-            <ChatHeaderBlock className="justify-center items-center" />
+            <ChatHeaderBlock className="justify-center items-center">
+              <div className="flex flex-col items-center leading-tight text-center">
+                <span className="text-sm font-semibold">{AI_NAME}</span>
+                <span className="hidden sm:block text-[11px] text-muted-foreground">{AI_TAGLINE}</span>
+              </div>
+            </ChatHeaderBlock>
 
             <ChatHeaderBlock className="justify-end gap-2">
               {/* Context Memory dropdown (toggle via COMPACTION_SHOW_CONTEXT_MEMORY in config) */}
@@ -411,6 +426,23 @@ export default function Chat() {
           <div className="relative mx-auto max-w-3xl px-3 sm:px-5">
             <div className="message-fade-overlay" />
 
+            {isClient && showStarters && (
+              <div className="mb-3 flex flex-wrap justify-center gap-2">
+                {STARTER_PROMPTS.map((s) => (
+                  <Button
+                    key={s.label}
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full bg-card text-xs"
+                    onClick={() => sendStarter(s.prompt)}
+                  >
+                    {s.label}
+                  </Button>
+                ))}
+              </div>
+            )}
+
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FieldGroup>
                 <Controller
@@ -428,7 +460,7 @@ export default function Chat() {
                           {...field}
                           rows={1}
                           className="min-h-14 max-h-48 resize-none overflow-y-auto rounded-[20px] bg-card pl-5 pr-14 py-[18px] leading-5"
-                          placeholder="Type your message here... (Shift+Enter for a new line)"
+                          placeholder="Describe your AI system or ask about the EU AI Act... (Shift+Enter for a new line)"
                           disabled={status === "streaming"}
                           aria-invalid={fieldState.invalid}
                           autoComplete="off"
@@ -470,11 +502,11 @@ export default function Chat() {
             </form>
 
             <div className="mt-2 text-center text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} {OWNER_NAME}{" "}
+              &copy; {new Date().getFullYear()} {OWNER_NAME} · Not legal advice ·{" "}
               <Link href="/terms" className="underline">
                 Terms of Use
               </Link>{" "}
-              Powered by{" "}
+              · Built on{" "}
               <Link href="https://www.ringel.ai" className="underline">
                 ringel.AI
               </Link>

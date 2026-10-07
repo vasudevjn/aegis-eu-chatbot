@@ -1,3 +1,58 @@
+# Aegis: EU AI Act Compliance Copilot
+
+**Helping companies turn a complex regulation into clear, actionable compliance.**
+
+Aegis is a conversational AI governance assistant. A product manager describes an AI system in plain language, for example:
+
+> "We use an AI model to screen job applications and rank candidates based on their CV and interview responses."
+
+Aegis then runs a structured assessment:
+
+**Describe → Classify → Map obligations → Check gaps → Act**
+
+| Capability | What it does |
+|---|---|
+| 🔎 Classify | Likely tier: 🚫 Prohibited (Art. 5), 🔴 High-risk (Art. 6, Annex I/III, incl. the Art. 6(3) exception and profiling override), 🟡 Transparency (Art. 50), 🔵 GPAI model (Arts. 51–55), 🟢 Minimal risk. Tiers can stack. |
+| 📋 Map obligations | Obligations for the user's role (provider, deployer, importer, distributor; Art. 25 role shifts), translated into product, engineering, data, legal and governance work with owners. |
+| ✅ Compliance check | Targeted questions on existing controls, marked ✅ / ⚠️ / ❌. |
+| 🛠️ Recommend actions | Prioritised P0 / P1 / P2 action plan, each step tied to an article and the evidence it produces. |
+| 📄 Generate evidence | Draft artefacts: risk checklists, Annex IV documentation outlines, AI governance registers, FRIA outlines, disclosure text, incident runbooks, questions for legal and security. Exportable as Markdown. |
+| 🔄 Stay current | Date-aware phased timeline (Art. 113), flags pending amendments such as the Digital Omnibus, and (with web search on) checks official EU sources for the latest guidance. |
+
+**Who it's for:** product managers, engineering and data teams, legal and compliance teams, and business leaders.
+
+**Core principle:** Aegis does not replace lawyers or regulators. It is a *first-line* copilot that prepares teams for formal compliance review. Every assessment says so.
+
+## How it's grounded
+
+- **Built-in legal reference** ([`lib/ai-act/reference.ts`](lib/ai-act/reference.ts)): 16 curated, article-level sections of Regulation (EU) 2024/1689 (scope, roles, AI literacy, prohibited practices, high-risk classification, Annex III, the Art. 6(3) exception, Arts. 8–15 requirements, provider and deployer duties, FRIA, Art. 50 transparency, GPAI, incident reporting, timeline, penalties, sandboxes). Each section links to the official EUR-Lex text. It is served by the `aiActReference` tool, needs no external service, and every answer cites it inline with a Sources box.
+- **Web search (optional, recommended):** Exa, steered to official EU domains, for amendment status, new guidelines, codes of practice and standards.
+- **Document library (optional):** the template's Pinecone RAG pipeline (`RAGloader/`) can ingest the full Act text, recitals and Commission guidelines into the `aegis-eu-ai-act` index. It switches on automatically once `PINECONE_API_KEY` is set.
+
+## Deploy on Vercel
+
+1. Vercel → **Add New → Project** → import this GitHub repo (framework: Next.js, defaults are fine).
+2. **Settings → Environment Variables:**
+
+| Variable | Required? | Purpose |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | **Required** | Chat model, moderation, summaries |
+| `EXA_API_KEY` | Recommended | Live regulatory updates via web search |
+| `PINECONE_API_KEY` | Optional | Only after ingesting documents into the `aegis-eu-ai-act` index |
+| `SUMMARY_HMAC_SECRET` | Optional | Any long random string (signs conversation summaries) |
+
+3. Deploy (or redeploy after changing variables).
+
+Local: `cp env.template .env.local`, add your key, then `npm install && npm run dev`.
+
+## Maintaining the legal content
+
+When the law, its guidance or the dates change (e.g. the Digital Omnibus is adopted), edit the relevant section in `lib/ai-act/reference.ts` and update `REFERENCE_REVIEWED_ON`. The assessment workflow and output format live in `WORKFLOW_PROMPT` in [`prompts.ts`](prompts.ts). Branding, welcome text and starter prompts are in [`config.ts`](config.ts).
+
+---
+
+*The rest of this README is the documentation of the myAI6 template this project is built on.*
+
 # myAI6
 
 **A modular RAG chatbot built with Next.js 16, Vercel AI SDK v6, and Pinecone.**

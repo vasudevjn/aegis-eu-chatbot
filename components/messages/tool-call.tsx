@@ -1,7 +1,7 @@
 "use client";
 
 import { ToolCallPart, ToolResultPart } from "ai";
-import { BookOpen, Globe, Search, Wrench } from "lucide-react";
+import { BookOpen, Globe, Scale, Wrench } from "lucide-react";
 import { Shimmer } from "../ai-elements/shimmer";
 import { useRotatingLabel } from "@/hooks/use-rotating-label";
 import { pickRandomPastTense, type FunLabelCategory } from "@/lib/fun-labels";
@@ -27,7 +27,23 @@ function formatSearchArgs(_: string, input: unknown): string {
   }
 }
 
+function formatReferenceArgs(_: string, input: unknown): string {
+  if (typeof input !== "object" || input === null) return "";
+  const args = input as { query?: unknown; sections?: unknown };
+  if (typeof args.query === "string" && args.query) return args.query;
+  return Array.isArray(args.sections)
+    ? args.sections.map((id) => String(id).replace(/-/g, " ")).join(", ")
+    : "";
+}
+
 const TOOL_CONFIG: Record<string, ToolDisplayConfig> = {
+  aiActReference: {
+    callCategory: "legalReference",
+    resultCategory: "legalReference",
+    call_icon: <Scale className="w-4 h-4" />,
+    result_icon: <Scale className="w-4 h-4" />,
+    formatArgs: formatReferenceArgs,
+  },
   webSearch: {
     callCategory: "webSearch",
     resultCategory: "webSearch",
@@ -41,12 +57,6 @@ const TOOL_CONFIG: Record<string, ToolDisplayConfig> = {
     call_icon: <BookOpen className="w-4 h-4" />,
     result_icon: <BookOpen className="w-4 h-4" />,
     formatArgs: formatSearchArgs,
-  },
-  fetchOwnerProfiles: {
-    callCategory: "webSearch",
-    resultCategory: "webSearch",
-    call_icon: <Globe className="w-4 h-4" />,
-    result_icon: <Globe className="w-4 h-4" />,
   },
 };
 

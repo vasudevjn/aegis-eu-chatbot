@@ -45,3 +45,4 @@ RAGloader/content/**
 coverage/
 dist/
 __pycache__/
+.claude/

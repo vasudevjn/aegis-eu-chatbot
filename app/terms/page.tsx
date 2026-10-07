@@ -19,7 +19,7 @@ export default function Terms() {
                 <p className="text-gray-700">
                     The following terms of use govern access to and use of the {AI_NAME}
                      Assistant ("AI Chatbot"), an artificial intelligence tool provided by
-                    {OWNER_NAME} ("I", "me", or "myself"). By engaging with the AI
+                    {OWNER_NAME} ("we" or "us"). By engaging with the AI
                     Chatbot, you agree to these terms. If you do not agree, you may not
                     use the AI Chatbot.
                 </p>
@@ -30,9 +30,18 @@ export default function Terms() {
                         <li className="text-gray-700">
                             <span className="font-semibold">Provider and Purpose:</span> The
                             AI Chatbot is a tool developed and maintained by {OWNER_NAME}. It
-                            is intended solely to assist users with questions about the topic
-                            selected and data curated by {OWNER_NAME}. The AI Chatbot is not
-                            affiliated with, endorsed by, or operated by ringel.AI.
+                            is intended solely to give first-line, informational guidance on the EU AI Act
+                            (Regulation (EU) 2024/1689) and related AI governance practice. The AI Chatbot is not
+                            affiliated with, endorsed by, or operated by ringel.AI, the European Commission, or any EU institution or authority.
+                        </li>
+                        <li className="text-gray-700">
+                            <span className="font-semibold">Not Legal Advice:</span>{" "}
+                            Risk classifications, obligation maps, gap checks, action plans and
+                            draft documents produced by the AI Chatbot are preliminary
+                            assessments for internal preparation only. They are not legal advice,
+                            do not create a lawyer-client relationship, and do not replace review
+                            by qualified counsel, notified bodies or competent authorities.
+                            Do not enter confidential, personal or privileged information.
                         </li>
                         <li className="text-gray-700">
                             <span className="font-semibold">Third-Party Involvement:</span>{" "}
@@ -76,7 +85,7 @@ export default function Terms() {
                             <span className="font-semibold">
                                 No Responsibility for Damages:
                             </span>{" "}
-                            Under no circumstances shall {OWNER_NAME}, his collaborators,
+                            Under no circumstances shall {OWNER_NAME}, its members, collaborators,
                             partners, affiliated entities, or representatives be liable for
                             any direct, indirect, incidental, consequential, special, or
                             punitive damages arising out of or in connection with the use of
@@ -169,7 +178,7 @@ export default function Terms() {
                     <h3 className="text-xl font-semibold">Indemnification</h3>
                     <p className="text-gray-700">
                         By using the AI Chatbot, you agree to indemnify and hold harmless
-                        {OWNER_NAME}, his collaborators, partners, affiliated entities, and
+                        {OWNER_NAME}, its members, collaborators, partners, affiliated entities, and
                         representatives from any claims, damages, losses, or liabilities
                         arising out of your use of the AI Chatbot or violation of these
                         terms.

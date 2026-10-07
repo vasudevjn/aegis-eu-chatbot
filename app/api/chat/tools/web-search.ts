@@ -7,7 +7,7 @@ import {
   EXA_MAX_CHARACTERS,
   EXA_SYSTEM_PROMPT,
   EXA_LIVECRAWL,
-  OWNER_PROFILE_DOMAINS,
+  OFFICIAL_SOURCE_DOMAINS,
 } from '@/config';
 import type { UISource } from '@/types/data';
 
@@ -80,24 +80,21 @@ export function formatWebResults(results: WebResult[], synthesis: string): strin
 export function createWebSearch(collect: (s: UISource, content?: string) => void) {
   return tool({
   description:
-    'Search the web for information related to the knowledge base scope. ' +
-    'Use AFTER vectorDatabaseSearch. Good uses: recent developments, external perspectives, citations, author profiles, related work. ' +
-    'CRITICAL: Do NOT search for specific framework/paper names. Instead, search for the UNDERLYING CONCEPTS and METHODS. ' +
-    'Use additionalQueries to cover 2-3 different angles with different terminology. ' +
-    `For the LATEST on the owner, prefer the fetchOwnerProfiles tool first; use this tool for broad follow-ups WITHOUT includeDomains. ` +
-    `Only set includeDomains (e.g. ${OWNER_PROFILE_DOMAINS.join(', ')}) when the user explicitly asks about one specific site.`,
+    'Search the web for CURRENT developments on the EU AI Act: the status of amendments such as the Digital Omnibus, ' +
+    'newly published Commission guidelines, codes of practice, harmonised standards, templates, and enforcement news. ' +
+    'Use AFTER aiActReference, only when currency matters or the user asks for the latest. ' +
+    'Include the current year in queries about recent developments. Use additionalQueries to cover 2-3 different phrasings. ' +
+    `For legal status, set includeDomains to official sources (${OFFICIAL_SOURCE_DOMAINS.join(', ')}).`,
   inputSchema: z.object({
     query: z.string().min(1).describe(
-      'Primary search query using BROAD conceptual terms, NOT specific framework names. ' +
-      'Describe the PROBLEM DOMAIN and METHODS, not the name of a specific approach.'
+      'Primary search query, e.g. "Digital Omnibus AI Act high-risk deadline adopted 2026".'
     ),
     additionalQueries: z.array(z.string()).optional().describe(
-      '2-3 alternative queries using DIFFERENT terminology for the same topic. ' +
-      'Each should use different synonyms, related methods, or application domains to maximize coverage.'
+      '2-3 alternative queries using DIFFERENT terminology for the same topic.'
     ),
     includeDomains: z.array(z.string()).optional().describe(
-      'Restrict results to these domains (e.g. ["linkedin.com","orcid.org"]). ' +
-      'Use for profile/recency lookups about a specific person to avoid stale or unrelated pages.'
+      'Restrict results to these domains (e.g. ["eur-lex.europa.eu","digital-strategy.ec.europa.eu"]). ' +
+      'Use for legal-status checks to avoid secondary commentary.'
     ),
   }),
   execute: async ({ query, additionalQueries, includeDomains }) => {

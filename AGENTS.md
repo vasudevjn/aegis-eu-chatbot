@@ -1,4 +1,6 @@
-# myAI6 Agent Guide
+# Aegis (EU AI Act Compliance Copilot) — Agent Guide
+
+Built on the myAI6 template. Domain knowledge lives in `lib/ai-act/reference.ts` (curated, article-level summaries of Regulation (EU) 2024/1689 with EUR-Lex links) and the assessment workflow in `prompts.ts` (`WORKFLOW_PROMPT`). When the law, guidance or implementation dates change, update the reference and bump `REFERENCE_REVIEWED_ON`.
 
 ## Configuration Model
 
@@ -40,13 +42,13 @@ Configuration is split into two places:
 ## Tools
 
 Tools live in `app/api/chat/tools/`. Each is conditionally included in `lib/ai/tools.ts`
-based on the feature switches (`ENABLE_VECTOR_SEARCH`, `ENABLE_WEB_SEARCH`).
+based on the feature switches (`ENABLE_VECTOR_SEARCH`, `ENABLE_WEB_SEARCH`), which default to on only when the matching API key is set.
 
 | Tool | File | Description |
 |------|------|-------------|
 | `vectorDatabaseSearch` | `search-vector-database.ts` | Pinecone RAG search |
-| `webSearch` | `web-search.ts` | Exa web search |
-| `fetchOwnerProfiles` | `fetch-owner-profiles.ts` | Live fetch of the owner's profile pages (`OWNER_PROFILE_SOURCES`) via Exa contents API |
+| `aiActReference` | `ai-act-reference.ts` | Built-in EU AI Act reference (always on, no key) |
+| `webSearch` | `web-search.ts` | Exa web search for regulatory updates (on when `EXA_API_KEY` is set) |
 
 UI display for tools is in `components/messages/tool-call.tsx`.
 
@@ -74,3 +76,13 @@ classes and functions from `RAGloader/myAI6_RAG.py`. See README for pipeline
 documentation (stages incl. formula-to-LaTeX repair, content types,
 Cloudinary/SFTP image hosting, index utilities). Notebooks must never be
 committed with API keys or other credentials filled in.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

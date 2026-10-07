@@ -20,16 +20,52 @@ function getDateAndTime(): string {
 export const DATE_AND_TIME = getDateAndTime();
 
 // --- Assistant identity (all user-facing naming derives from these) ---
-export const AI_NAME = "myAI6"; // ← your assistant's name
-export const OWNER_NAME = "Your Name"; // ← the person this assistant represents
+export const AI_NAME = "Aegis";
+export const AI_TAGLINE = "EU AI Act Compliance Copilot";
+export const OWNER_NAME = "Team Aegis"; // ← the team that builds and maintains the copilot
 export const AI_DESCRIPTION = `
-${AI_NAME} is ${OWNER_NAME}'s AI assistant. It answers questions about ${OWNER_NAME}'s work using a curated knowledge base, and can search the web for current information.
+${AI_NAME} is an ${AI_TAGLINE}: describe an AI system in plain language and it classifies its likely risk tier under the EU AI Act, maps the obligations that apply to your role, checks for compliance gaps, and drafts a prioritised action plan and evidence artefacts. A first-line governance copilot, not legal advice.
 `.trim();
 
 // Browser tab / metadata title. Change freely — one line, no other edits needed.
-export const BROWSER_TAB_TITLE = `${AI_NAME}`;
+export const BROWSER_TAB_TITLE = `${AI_NAME} · ${AI_TAGLINE}`;
 
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, ${OWNER_NAME}'s AI assistant.`;
+export const WELCOME_MESSAGE = `Hi, I'm **${AI_NAME}**, your EU AI Act compliance copilot.
+
+Describe an AI system you build or use, in plain language. I'll walk you through:
+
+1. **Classify**: is it prohibited, high-risk, subject to transparency duties, a general-purpose AI model, or minimal risk?
+2. **Map obligations**: what applies to you as a provider, deployer, importer or distributor.
+3. **Check compliance**: a few targeted questions to find gaps.
+4. **Act**: a prioritised action plan, plus draft evidence such as checklists and governance registers.
+
+*Example: "We use an AI model to screen job applications and rank candidates based on their CV and interview responses."*
+
+I'm a first-line governance tool, not a lawyer. Use my output to prepare for formal legal review.`;
+
+// One-click prompts shown under the welcome message on a fresh chat.
+export const STARTER_PROMPTS = [
+  {
+    label: "Assess a hiring tool",
+    prompt:
+      "We use an AI model to screen job applications and rank candidates based on their CV and interview responses. Run a compliance assessment.",
+  },
+  {
+    label: "Customer-service chatbot",
+    prompt:
+      "We're launching a customer-service chatbot built on a third-party LLM API for EU customers. What do we need to do under the AI Act?",
+  },
+  {
+    label: "What applies in 2026?",
+    prompt:
+      "Which EU AI Act obligations already apply today, and what is coming next? Give me the timeline.",
+  },
+  {
+    label: "Generate an AI register",
+    prompt:
+      "Create a template AI governance register we can use to inventory all our AI systems for EU AI Act compliance.",
+  },
+] as const;
 export const CLEAR_CHAT_TEXT = "New";
 
 // --- Defaults (PROF REQUIREMENT: Anthropic by default) ---
@@ -85,7 +121,7 @@ export const MODERATION_DENIAL_MESSAGE_DEFAULT =
 // --- Pinecone ---
 export const PINECONE_TOP_K = 20; // sized for a multi-document KB; raise if the index grows substantially
 export const PINECONE_MIN_SCORE = 0.1; // filter out low-relevance matches (lowered to catch acronym/abbreviation queries)
-export const PINECONE_INDEX_NAME = "myai6"; // Pinecone index names must be lowercase (letters, numbers, hyphens)
+export const PINECONE_INDEX_NAME = "aegis-eu-ai-act"; // Pinecone index names must be lowercase (letters, numbers, hyphens)
 
 // Parent-child retrieval (3-namespace architecture)
 export const PINECONE_USE_PARENT_CHILD = true; // false = legacy "default" namespace
@@ -98,17 +134,15 @@ export const PINECONE_VISUAL_TOP_K = 20; // topK for the visual-enrichment query
 export const PINECONE_VISUALS_PER_SOURCE = 20; // max figure/table chunks merged into context per retrieved source (keep >= PINECONE_VISUAL_TOP_K so late-document figures are not cut)
 
 // --- Knowledge Base Scope (tells the model what topics are indexed) ---
-// Update this list whenever you ingest new content into Pinecone.
-// The model uses this to decide whether to search the KB or skip it entirely.
+// Describes the OPTIONAL Pinecone document library. Update this list whenever
+// you ingest new content (see README "Building the document library").
 export const KB_SCOPE = `
-The knowledge base covers ${OWNER_NAME}'s work. Topics include:
+The document library holds the official texts behind the EU AI Act:
+- Regulation (EU) 2024/1689 (the AI Act): recitals, articles and annexes, verbatim
+- European Commission guidelines (AI system definition, prohibited practices, general-purpose AI models)
+- The General-Purpose AI Code of Practice and AI Office templates
 
-DOCUMENTS AND TOPICS (replace these examples with what you actually ingest):
-- [Example] A research paper or article, its methods, and its findings
-- [Example] A CV or resume: education, employment, projects, awards
-- [Example] Presentation slides or a talk transcript
-
-Any question about ${OWNER_NAME} or the topics above is within scope.
+Any question about the EU AI Act, AI governance or AI compliance is within scope.
 `.trim();
 
 // --- Exa Web Search ---
@@ -118,40 +152,26 @@ export const EXA_MAX_CHARACTERS = 3000; // max chars of page text per result
 // "preferred" makes Exa fetch live page content when possible, reducing the odds
 // that stale or deleted pages (e.g. dead university URLs) surface in results.
 export const EXA_LIVECRAWL = "preferred" as const; // "never" | "fallback" | "preferred" | "always"
-export const EXA_SYSTEM_PROMPT = `Prefer authoritative and academic sources: peer-reviewed journals, arxiv.org, SSRN, NBER, university sites, and official publications. For questions about ${OWNER_NAME}, prioritize their official profiles: LinkedIn, ORCID, ResearchGate, and Google Scholar. Avoid duplicates, low-quality aggregators, and pages that appear outdated or removed.`;
+export const EXA_SYSTEM_PROMPT = `Prefer official and primary sources on the EU AI Act: EUR-Lex, the European Commission (digital-strategy.ec.europa.eu, ec.europa.eu, the AI Act Service Desk), the European Parliament, the Council of the EU, the European Data Protection Board, and national market surveillance authorities. Then reputable law firms and established policy trackers. Prefer the most recent publication; avoid duplicates, marketing pages and outdated material.`;
 
-// --- Owner Profile Sources (latest information and news) ---
-// The owner's official profile pages. For "latest on the owner" questions, the
-// model is instructed to web-search these places FIRST: the exact URLs are
-// listed in the system prompt, and webSearch restricts results to their
-// domains via includeDomains. Update here when a profile moves; everything
-// else derives from this list.
-export const OWNER_PROFILE_SOURCES = [
-  // Replace with the owner's real public profile pages (name + exact URL).
-  { name: "Google Scholar", url: "https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID" },
-  { name: "LinkedIn", url: "https://www.linkedin.com/in/your-profile/" },
+// Official domains the model restricts webSearch to when checking legal status
+// (amendments, guidelines, codes of practice).
+export const OFFICIAL_SOURCE_DOMAINS = [
+  "eur-lex.europa.eu",
+  "digital-strategy.ec.europa.eu",
+  "ec.europa.eu",
+  "europarl.europa.eu",
+  "consilium.europa.eu",
 ];
-
-// Max characters of live page text fetched per profile (fetchOwnerProfiles tool).
-export const OWNER_PROFILE_MAX_CHARACTERS = 5000;
-
-// Domains derived from the profile sources, used for webSearch includeDomains.
-export const OWNER_PROFILE_DOMAINS = OWNER_PROFILE_SOURCES.map((s) => {
-  try {
-    return new URL(s.url).hostname.replace(/^www\./, "");
-  } catch {
-    return "";
-  }
-}).filter(Boolean);
 
 // --- Chat Route Limits ---
 // Hard cap on tool-use steps per request. Must be large enough to cover the
-// per-response soft budgets below plus one fetchOwnerProfiles call and the
-// final compose step, i.e. >= MAX_KB_SEARCHES + MAX_WEB_SEARCHES + 2.
+// per-response soft budgets below plus up to two aiActReference calls and the
+// final compose step, i.e. >= MAX_KB_SEARCHES + MAX_WEB_SEARCHES + 3.
 export const MAX_STEPS = 8; // max tool-use steps per request
 // Per-response soft budgets (enforced via prompt guidance in lib/ai/tools.ts).
 export const MAX_KB_SEARCHES = 2; // max vectorDatabaseSearch calls per response
-export const MAX_WEB_SEARCHES = 3; // max webSearch calls per response
+export const MAX_WEB_SEARCHES = 2; // max webSearch calls per response
 export const MAX_MESSAGES = 100; // max messages in conversation history
 export const MAX_MESSAGE_TEXT_LENGTH = 10000; // max chars per user message
 export const VERCEL_MAX_DURATION = 120; // Vercel Pro plan function timeout in seconds
@@ -230,13 +250,19 @@ export type ReasoningDisplayMode = "full" | "truncated" | "hidden";
 export const REASONING_DISPLAY_MODE: ReasoningDisplayMode = "truncated";
 export const REASONING_TRUNCATE_WORDS = 15; // words to show in "truncated" mode
 
-// --- Backend toggles (enabled by default) ---
-// Disable web search by setting the env var: ENABLE_WEB_SEARCH=false
-export const ENABLE_WEB_SEARCH =
-  process.env.ENABLE_WEB_SEARCH?.toLowerCase() !== "false";
+// --- Backend toggles ---
+// Each optional service switches on automatically when its API key is set and
+// can be forced off with its env var. The built-in EU AI Act reference
+// (aiActReference tool) needs no key and is always on.
 
-// Disable the Pinecone knowledge base by setting the env var: ENABLE_VECTOR_SEARCH=false
-// When off: the KB tool is removed from the model, no Pinecone connection is made,
-// and PINECONE_API_KEY is not needed. The bot answers from general knowledge (+ web search if enabled). 
+// Web search (Exa): on when EXA_API_KEY is set. Force off with ENABLE_WEB_SEARCH=false
+export const ENABLE_WEB_SEARCH =
+  process.env.ENABLE_WEB_SEARCH?.toLowerCase() !== "false" &&
+  !!process.env.EXA_API_KEY;
+
+// Pinecone document library: on when PINECONE_API_KEY is set. Force off with
+// ENABLE_VECTOR_SEARCH=false. When off, the KB tool is removed from the model
+// and no Pinecone connection is made.
 export const ENABLE_VECTOR_SEARCH =
-  process.env.ENABLE_VECTOR_SEARCH?.toLowerCase() !== "false";
+  process.env.ENABLE_VECTOR_SEARCH?.toLowerCase() !== "false" &&
+  !!process.env.PINECONE_API_KEY;
