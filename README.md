@@ -23,6 +23,10 @@ Aegis then runs a structured assessment:
 
 **Core principle:** Aegis does not replace lawyers or regulators. It is a *first-line* copilot that prepares teams for formal compliance review. Every assessment says so.
 
+## Presentation mode
+
+The same deployment hosts a classroom-style deck at **`/present`** (also linked from the chat header). Section tabs run across the top: Opening, The problem, The solution, Live demo, Classify this, Who it's for, Value, How it's built, Close. Use ← → to move, **N** for speaker notes. The **Live demo** tab runs the real app inside the deck with one-click scenarios, and **Classify this** is an eight-case audience game. Deep links: `/present#s4-1` opens the demo. Content lives in [`app/present/page.tsx`](app/present/page.tsx). `/?q=<prompt>` opens the app with a fresh chat and sends that prompt.
+
 ## How it's grounded
 
 - **Built-in legal reference** ([`lib/ai-act/reference.ts`](lib/ai-act/reference.ts)): 16 curated, article-level sections of Regulation (EU) 2024/1689 (scope, roles, AI literacy, prohibited practices, high-risk classification, Annex III, the Art. 6(3) exception, Arts. 8–15 requirements, provider and deployer duties, FRIA, Art. 50 transparency, GPAI, incident reporting, timeline, penalties, sandboxes). Each section links to the official EUR-Lex text. It is served by the `aiActReference` tool, needs no external service, and every answer cites it inline with a Sources box.
