@@ -130,7 +130,9 @@ export const MODERATION_DENIAL_MESSAGE_DEFAULT =
 // --- Pinecone ---
 export const PINECONE_TOP_K = 20; // sized for a multi-document KB; raise if the index grows substantially
 export const PINECONE_MIN_SCORE = 0.1; // filter out low-relevance matches (lowered to catch acronym/abbreviation queries)
-export const PINECONE_INDEX_NAME = "aegis-eu-ai-act"; // Pinecone index names must be lowercase (letters, numbers, hyphens)
+// Set the PINECONE_INDEX_NAME env var (Vercel or .env.local) to use your own index; the default applies when unset.
+// Pinecone index names must be lowercase (letters, numbers, hyphens).
+export const PINECONE_INDEX_NAME = process.env.PINECONE_INDEX_NAME?.trim() || "aegis";
 
 // Parent-child retrieval (3-namespace architecture)
 export const PINECONE_USE_PARENT_CHILD = true; // false = legacy "default" namespace

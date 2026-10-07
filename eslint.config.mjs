@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Static presentation site, served at "/" (see rewrites in next.config.ts).
+    "public/presentation/**",
   ]),
 ]);
 

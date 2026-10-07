@@ -501,6 +501,11 @@ export default function Chat() {
 
             <div className="mt-2 text-center text-xs text-muted-foreground">
               &copy; {new Date().getFullYear()} {OWNER_NAME} · Not legal advice ·{" "}
+              {/* "/" is the presentation site; target _top so it also works when this page is embedded in it. */}
+              <a href="/" target="_top" className="underline">
+                About Aegis
+              </a>{" "}
+              ·{" "}
               <Link href="/terms" className="underline">
                 Terms of Use
               </Link>{" "}

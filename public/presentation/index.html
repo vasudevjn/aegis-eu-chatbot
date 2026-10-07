@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aegis · EU AI Act Compliance Copilot</title>
+<meta name="description" content="Aegis turns the EU AI Act into a clear, prioritized action plan for every AI product you bring to Europe.">
+<meta name="theme-color" content="#fdfdfd">
+<link rel="icon" type="image/png" href="/presentation/assets/icon-64.png">
+<link rel="apple-touch-icon" href="/presentation/assets/icon-180.png">
+<link rel="stylesheet" href="/presentation/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#problem" aria-label="Aegis, home">
+    <img class="mark" src="/presentation/assets/logo-mark.png" alt="" width="44" height="42">
+    <span class="brand-name">Aegis</span>
+    <span class="brand-tag">Ask · Assess · Comply</span>
+  </a>
+  <nav class="tabs" role="tablist" aria-label="Presentation sections">
+    <button role="tab" id="tab-problem" data-slide="problem" aria-controls="problem"><span class="n">1</span>The Problem</button>
+    <button role="tab" id="tab-choice" data-slide="choice" aria-controls="choice"><span class="n">2</span>The Choice <span class="sub">(Shreyas &amp; Preyas)</span></button>
+    <button role="tab" id="tab-value" data-slide="value" aria-controls="value"><span class="n">3</span>Business Value</button>
+    <button role="tab" id="tab-risks" data-slide="risks" aria-controls="risks"><span class="n">4</span>Risks &amp; Safeguards</button>
+    <button role="tab" id="tab-chat" data-slide="chat" aria-controls="chat" class="cta">Talk to Aegis <span aria-hidden="true">→</span></button>
+  </nav>
+  <button class="notes-toggle" id="notesToggle" aria-pressed="false" title="Speaker notes (N)">Notes</button>
+</header>
+
+<main id="stage">
+
+<!-- ============ SLIDE 1 — THE PROBLEM ============ -->
+<section class="slide" id="problem" role="tabpanel" aria-labelledby="tab-problem" data-title="The Problem">
+  <div class="wrap">
+    <p class="eyebrow">The challenge</p>
+    <h1>Your AI product is ready for Europe. Is it ready for the <em>EU AI Act</em>?</h1>
+    <p class="lede">Every company that sells an AI-powered product in the EU must now show that it meets the EU AI Act. Most product teams can't yet say whether they do.</p>
+    <p class="body">The EU AI Act regulates AI by risk. What you must do depends on what your system does, who uses it, who it affects and where you sit in the AI value chain. For a team about to launch in Europe, compliance has become a product question as well as a legal one, and it usually comes up too late.</p>
+
+    <h2 class="section-label">Three questions every team gets stuck on</h2>
+    <div class="grid cols-3">
+      <article class="card q">
+        <span class="num">01</span>
+        <h3>Does this apply to us?</h3>
+        <p>It is hard to tell whether a new or existing AI feature falls into a prohibited, high-risk, transparency or general-purpose AI (GPAI) category.</p>
+      </article>
+      <article class="card q">
+        <span class="num">02</span>
+        <h3>What exactly must we do?</h3>
+        <p>Hundreds of pages of legal text have to be turned into concrete product, engineering, documentation and monitoring tasks.</p>
+      </article>
+      <article class="card q">
+        <span class="num">03</span>
+        <h3>Are we still compliant?</h3>
+        <p>Obligations apply in phases and the dates keep shifting. Prohibitions and GPAI duties already apply, transparency rules have applied since August 2026, and standalone high-risk obligations move to December 2027.</p>
+      </article>
+    </div>
+
+    <aside class="stat" aria-label="The cost of getting it wrong">
+      <p class="stat-label">The cost of getting it wrong</p>
+      <div class="stat-row">
+        <p><strong>€35M <span>or 7%</span></strong>of global annual turnover for prohibited AI practices</p>
+        <p><strong>€15M <span>or 3%</span></strong>for breaching other obligations</p>
+      </div>
+      <p class="fine">Up to these amounts, whichever is higher. Lower caps apply to SMEs.</p>
+    </aside>
+
+    <p class="closing">AI regulation has become part of product management. Teams need a way to answer these questions before launch, not after a regulator asks.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 — THE CHOICE ============ -->
+<section class="slide" id="choice" role="tabpanel" aria-labelledby="tab-choice" data-title="The Choice" hidden>
+  <div class="wrap">
+    <p class="eyebrow">Ancient wisdom, modern compliance</p>
+    <h1>Two paths are in front of every AI team</h1>
+    <p class="lede">The Katha Upanishad named this choice thousands of years ago.</p>
+
+    <div class="verse-row">
+      <blockquote class="verse">
+        <p lang="sa" class="sanskrit">śreyaś ca preyaś ca manuṣyam etas<br>tau samparītya vivinakti dhīraḥ</p>
+        <p class="translation">“The good and the pleasant both come to a person. The wise one examines them both and tells them apart.”</p>
+        <footer>Katha Upanishad 1.2.2</footer>
+      </blockquote>
+      <div class="story">
+        <p>Young Nachiketa stands before Yama, the lord of death. Yama offers him wealth, kingdoms and long life. Nachiketa turns them all down and asks for true knowledge. Yama praises him because he chose <strong class="gold">Shreyas</strong>, the lasting good, over <strong class="rose">Preyas</strong>, what is pleasant right now.</p>
+      </div>
+    </div>
+
+    <div class="versus">
+      <div class="path preyas">
+        <h3><span class="tag">Preyas</span>The pleasant path</h3>
+        <ul>
+          <li>Ship now and deal with regulation later</li>
+          <li>“Our lawyers will look at it before launch”</li>
+          <li>Feels fast today</li>
+          <li>Gaps surface after deployment, as fines, recalls or lost deals</li>
+          <li>One-off, inconsistent reviews</li>
+        </ul>
+      </div>
+      <div class="vs" aria-hidden="true">vs</div>
+      <div class="path shreyas">
+        <h3><span class="tag">Shreyas</span>The right path</h3>
+        <ul>
+          <li>Build compliance into the product from day one</li>
+          <li>Every team understands its obligations as it builds</li>
+          <li>Stays fast, because nothing has to be redone</li>
+          <li>Gaps surface in design, when they are cheap to fix</li>
+          <li>A repeatable assessment across the whole AI portfolio</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="solution">
+      <h2>Aegis is the guide that makes <span class="gold">Shreyas</span> the easy choice.</h2>
+      <p>Choosing what's right shouldn't mean giving up speed. With Aegis, a product manager describes the AI system in plain language, for example <em>“We use an AI model to screen job applications and rank candidates.”</em> The Copilot then guides them through a structured assessment:</p>
+      <ol class="flow" aria-label="Assessment flow">
+        <li>Describe</li><li>Classify</li><li>Identify obligations</li><li>Assess gaps</li><li>Action plan</li>
+      </ol>
+    </div>
+
+    <div class="grid cols-3 caps">
+      <article class="card"><h3>Classify</h3><p>Works out whether the system is likely to be prohibited, high-risk, subject to transparency rules, GPAI-related or minimal risk.</p></article>
+      <article class="card"><h3>Map obligations</h3><p>Turns legal requirements into practical duties for risk management, data governance, documentation, human oversight and security.</p></article>
+      <article class="card"><h3>Check compliance</h3><p>Asks targeted questions about the product, data, users and processes to find missing controls.</p></article>
+      <article class="card"><h3>Recommend actions</h3><p>Produces a prioritized checklist, such as adding human oversight, documenting training data, enabling logging and disclosing AI use.</p></article>
+      <article class="card"><h3>Generate evidence</h3><p>Drafts risk-assessment checklists, governance registers and questions for legal and security teams.</p></article>
+      <article class="card"><h3>Stay current</h3><p>Tracks changing deadlines and Commission guidance so products can be reassessed over time.</p></article>
+    </div>
+
+    <p class="closing">Like Nachiketa, the wise team tells the two paths apart. Aegis helps you see the difference and take the right one.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3 — BUSINESS VALUE ============ -->
+<section class="slide" id="value" role="tabpanel" aria-labelledby="tab-value" data-title="Business Value" hidden>
+  <div class="wrap">
+    <p class="eyebrow">What your business gains</p>
+    <h1>Turn compliance from a launch blocker into a competitive edge</h1>
+    <p class="lede">From “Is our AI compliant?” to “Here is exactly what we need to do next.”</p>
+
+    <div class="grid cols-3 benefits">
+      <article class="card b"><span class="icon" aria-hidden="true">⚡&#xFE0E;</span><h3>Faster time to the EU market</h3><p>Find obligations at the design stage instead of the week before launch. That means fewer late-stage redesigns and fewer delayed releases.</p></article>
+      <article class="card b"><span class="icon" aria-hidden="true">◎</span><h3>Lower cost of compliance</h3><p>Aegis automates the first round of research and assessment, which usually takes days of work across product, legal and engineering. Legal experts can then spend their time on the hard cases.</p></article>
+      <article class="card b"><span class="icon" aria-hidden="true">⛨</span><h3>Reduced regulatory and financial exposure</h3><p>Catch prohibited uses and missing high-risk controls before they turn into fines of up to 7% of global turnover, forced withdrawals or reputational damage.</p></article>
+      <article class="card b"><span class="icon" aria-hidden="true">▤</span><h3>Audit-ready evidence on demand</h3><p>Risk checklists, governance registers and documentation drafts are produced as you go, so evidence exists when a regulator, auditor or notified body asks for it.</p></article>
+      <article class="card b"><span class="icon" aria-hidden="true">≡</span><h3>Consistency at scale</h3><p>Every AI product in the portfolio gets the same repeatable assessment, whichever team built it or whichever country it launches in.</p></article>
+      <article class="card b"><span class="icon" aria-hidden="true">✦</span><h3>Trust that wins deals</h3><p>Enterprise buyers increasingly ask about AI Act compliance in their due diligence. Clear, documented answers shorten sales cycles and set you apart from competitors.</p></article>
+    </div>
+
+    <h2 class="section-label">Who benefits</h2>
+    <div class="grid cols-4 roles">
+      <article class="card"><h3>Product managers</h3><p>Build compliance into design instead of adding it at launch</p></article>
+      <article class="card"><h3>Engineering &amp; data teams</h3><p>Get requirements as concrete technical controls</p></article>
+      <article class="card"><h3>Legal &amp; compliance</h3><p>Faster first-level reviews and standardized assessments</p></article>
+      <article class="card"><h3>Business leaders</h3><p>A clear view of regulatory exposure and remediation priorities</p></article>
+    </div>
+
+    <p class="closing">Choosing Shreyas pays off. Doing it right the first time is also the fastest way to market.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 — RISKS & SAFEGUARDS ============ -->
+<section class="slide" id="risks" role="tabpanel" aria-labelledby="tab-risks" data-title="Risks &amp; Safeguards" hidden>
+  <div class="wrap">
+    <p class="eyebrow">Responsible by design</p>
+    <h1>An AI that checks AI must hold itself to the same standard</h1>
+    <p class="lede">We know where an LLM-based Copilot can fail. Here is how each risk is handled today, and what is still on the roadmap.</p>
+
+    <div class="legend" aria-hidden="true"><span class="chip live">In place today</span><span class="chip road">On the roadmap</span></div>
+
+    <div class="risk-board">
+      <div class="risk-list" role="tablist" aria-label="Risks" aria-orientation="vertical">
+        <button role="tab" class="risk-tab" id="rt-1" aria-controls="rp-1" aria-selected="true"><span>01</span>Hallucinated or wrong legal guidance</button>
+        <button role="tab" class="risk-tab" id="rt-2" aria-controls="rp-2" aria-selected="false" tabindex="-1"><span>02</span>Misclassification of edge cases</button>
+        <button role="tab" class="risk-tab" id="rt-3" aria-controls="rp-3" aria-selected="false" tabindex="-1"><span>03</span>Outdated regulatory knowledge</button>
+        <button role="tab" class="risk-tab" id="rt-4" aria-controls="rp-4" aria-selected="false" tabindex="-1"><span>04</span>Over-reliance and false assurance</button>
+        <button role="tab" class="risk-tab" id="rt-5" aria-controls="rp-5" aria-selected="false" tabindex="-1"><span>05</span>Confidential data exposure</button>
+        <button role="tab" class="risk-tab" id="rt-6" aria-controls="rp-6" aria-selected="false" tabindex="-1"><span>06</span>Inconsistent answers</button>
+        <button role="tab" class="risk-tab" id="rt-7" aria-controls="rp-7" aria-selected="false" tabindex="-1"><span>07</span>Prompt injection and misuse</button>
+        <button role="tab" class="risk-tab own" id="rt-8" aria-controls="rp-8" aria-selected="false" tabindex="-1"><span>★</span>Our own compliance</button>
+      </div>
+
+      <div class="risk-detail">
+        <div class="risk-panel" role="tabpanel" id="rp-1" aria-labelledby="rt-1">
+          <p class="wrong"><b>What could go wrong</b>The model states an obligation that doesn't exist or misreads an article.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>Answers are grounded first in the document library (the Act's text), backed by a curated, article-level reference with links to EUR-Lex.</li>
+            <li>Every legal statement carries an inline citation, and a Sources box lists what was used.</li>
+            <li>Each classification comes with a confidence level (High, Medium or Low) and the fact that would change the answer.</li>
+            <li>If the sources don't cover something, Aegis says so instead of guessing.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>Add Commission guidance documents to the library, and sample answers for expert review.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-2" aria-labelledby="rt-2" hidden>
+          <p class="wrong"><b>What could go wrong</b>A high-risk system is labeled minimal risk, or the reverse.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>A fixed workflow checks in the Act's own order: scope, prohibited practices, high-risk (including the Article 6(3) exception and the profiling override), transparency, then GPAI. Tiers can stack.</li>
+            <li>Results are worded as “likely”. Missing facts become targeted questions.</li>
+            <li>High-stakes or ambiguous cases are sent to qualified counsel, not guessed.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>Rules-based decision logic for the classification itself, with the LLM in a supporting role, tested against labelled reference cases.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-3" aria-labelledby="rt-3" hidden>
+          <p class="wrong"><b>What could go wrong</b>Deadlines and guidance change, as the 2026 amendments did.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>The built-in reference carries a review date and has been updated for the Digital Omnibus (Regulation (EU) 2026/1744), which moved the high-risk dates.</li>
+            <li>That date appears in the Terms and on every exported assessment.</li>
+            <li>Aegis compares each deadline with today's date and says whether it already applies.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>Automated monitoring for new acts and guidance, a version stamp on each assessment, and a flag for reassessment when the law changes.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-4" aria-labelledby="rt-4" hidden>
+          <p class="wrong"><b>What could go wrong</b>Teams treat a Copilot result as a legal sign-off.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>Clear positioning: Aegis is a first-line governance partner, not a lawyer or regulator.</li>
+            <li>Classifications use “likely” language, and every full assessment ends with a not-legal-advice line.</li>
+            <li>Serious situations (a possibly prohibited practice, an incident, an authority enquiry) are sent to counsel. The Terms say the same.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>A built-in sign-off step for high-risk conclusions.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-5" aria-labelledby="rt-5" hidden>
+          <p class="wrong"><b>What could go wrong</b>Product details shared with the Copilot leak or are used for training.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>No accounts and no server-side conversation storage: chats stay in the user's own browser.</li>
+            <li>No analytics, and Aegis does not use conversations for training or advertising.</li>
+            <li>Users are told not to enter personal or confidential data and to describe systems in general terms. Messages are processed by AI providers under their own terms, and the Terms say so.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>An EU hosting region, automatic redaction of sensitive data, and encryption and role-based access if accounts are added.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-6" aria-labelledby="rt-6" hidden>
+          <p class="wrong"><b>What could go wrong</b>The same question gets different answers on different days.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>One fixed system prompt, one curated reference, a fixed workflow and a fixed output template for assessments.</li>
+            <li>Automated tests cover the citation logic, the legal reference and the model routing.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>A regression suite of reference cases, run before every release, so the same system gets the same classification.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-7" aria-labelledby="rt-7" hidden>
+          <p class="wrong"><b>What could go wrong</b>Users try to manipulate the Copilot into unsafe or misleading output.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>Every message passes a safety check before the model sees it.</li>
+            <li>Instructions to ignore override attempts, keep its instructions private, and refuse to help conceal non-compliance or mislead regulators.</li>
+            <li>Scope limited to EU AI Act topics, per-user rate limiting, and signed conversation summaries so earlier context can't be forged.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>Output-side guardrail checks and audit logging.</li></ul>
+        </div>
+
+        <div class="risk-panel" role="tabpanel" id="rp-8" aria-labelledby="rt-8" hidden>
+          <p class="wrong"><b>Why it matters</b>Aegis is itself an AI system, so we follow the same rules we help others meet.</p>
+          <h3><span class="chip live">In place today</span></h3>
+          <ul>
+            <li>We tell users clearly that they are talking to an AI, in the welcome message and in the Terms.</li>
+            <li>We publish the Terms of Use and document how the Copilot works.</li>
+          </ul>
+          <h3><span class="chip road">On the roadmap</span></h3>
+          <ul><li>Usage logging, and a formal human-review workflow for high-risk conclusions.</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <aside class="principle">
+      <p><strong>Aegis does not replace lawyers or regulators.</strong> It is a first-line governance partner. It helps teams understand the Act, find likely obligations, surface gaps and prepare the right questions and evidence for formal review.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ CHATBOT TAB ============ -->
+<section class="slide" id="chat" role="tabpanel" aria-labelledby="tab-chat" data-title="Talk to Aegis" hidden>
+  <div class="wrap narrow">
+    <div class="chat-hero">
+      <div>
+        <p class="eyebrow">Talk to Aegis</p>
+        <h1>Describe your AI system. Get your compliance roadmap.</h1>
+        <p class="lede">Tell Aegis what your AI product does in plain language. It will classify the risk, map your obligations and give you a prioritized action plan.</p>
+      </div>
+      <img class="lockup" src="/presentation/assets/logo.jpeg" alt="Aegis logo: a shield with the tagline Ask, Assess, Comply" width="220" height="220">
+    </div>
+
+    <div class="launch">
+      <a class="btn primary" id="launchBtn" href="#" target="_blank" rel="noopener">Launch the Copilot <span aria-hidden="true">→</span></a>
+      <button class="btn ghost" id="embedBtn" type="button" hidden aria-expanded="false" aria-controls="embedWrap">Show it here</button>
+      <p class="hint" id="launchHint" hidden>Set <code>CHATBOT_URL</code> at the top of <code>app.js</code> to enable this button.</p>
+    </div>
+
+    <div class="embed" id="embedWrap" hidden>
+      <iframe id="embedFrame" title="Aegis chatbot" loading="lazy" allow="clipboard-write"></iframe>
+    </div>
+
+    <h2 class="section-label">Try an example <span class="muted">(click to copy, then paste into Aegis)</span></h2>
+    <div class="chips" id="chips">
+      <button class="prompt-chip" type="button">We use an AI model to screen job applications and rank candidates.</button>
+      <button class="prompt-chip" type="button">Our app has a customer-service chatbot built on a third-party LLM.</button>
+      <button class="prompt-chip" type="button">We generate marketing images with AI for EU campaigns.</button>
+      <button class="prompt-chip" type="button">Our credit-scoring model decides loan eligibility.</button>
+    </div>
+
+    <p class="disclosure" role="note"><strong>You are interacting with an AI system.</strong> Aegis provides guidance based on the EU AI Act and is not a substitute for legal advice. Please don't share personal data you aren't authorized to share.</p>
+  </div>
+</section>
+
+</main>
+
+<aside class="notes" id="notes" hidden aria-live="polite">
+  <p class="notes-label">Speaker notes</p>
+  <p id="notesText"></p>
+</aside>
+
+<footer class="site-footer">
+  <span><strong>Aegis</strong> | Ask · Assess · Comply</span>
+  <span>Based on Regulation (EU) 2024/1689 (the EU AI Act), as amended by Regulation (EU) 2026/1744. Aegis gives guidance, not legal advice.</span>
+  <span class="counter" id="counter" aria-hidden="true">1 / 5</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="/presentation/app.js"></script>
+</body>
+</html>

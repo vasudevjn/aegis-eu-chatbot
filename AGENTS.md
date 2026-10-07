@@ -7,7 +7,7 @@ Built on the myAI6 template. Domain knowledge lives in `lib/ai-act/reference.ts`
 Configuration is split into two places:
 
 - **Env vars** (Vercel dashboard or `.env.local`) — secrets and operational switches:
-  API keys, `ENABLE_VECTOR_SEARCH`, `ENABLE_WEB_SEARCH`, `MODERATION_PROVIDER`, and the
+  API keys, `PINECONE_INDEX_NAME` (defaults to `aegis-eu-ai-act`), `ENABLE_VECTOR_SEARCH`, `ENABLE_WEB_SEARCH`, `MODERATION_PROVIDER`, and the
   optional security vars `SUMMARY_HMAC_SECRET` (compaction-summary signing) and
   `HEALTH_CHECK_TOKEN` (detailed /api/health checks in production).
   See `env.template` for all of them with explanations. Secrets are server-side only —
@@ -23,6 +23,7 @@ Configuration is split into two places:
 
 | File | Purpose |
 |------|---------|
+| `public/presentation/` | Static presentation site, served at `/` by the rewrite in `next.config.ts` (the chatbot is at `/chat`, `app/chat/page.tsx`) |
 | `config.ts` | Design/tuning parameters (see above) |
 | `env.template` | All env vars (keys + feature switches) with explanations |
 | `prompts.ts` | AI behavior, tone, confidentiality, citations, tool priority |

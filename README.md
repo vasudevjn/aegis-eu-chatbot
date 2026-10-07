@@ -29,9 +29,19 @@ Aegis then runs a structured assessment:
 - **Web search (off by default):** Exa, steered to official EU domains. Opt in with `ENABLE_WEB_SEARCH=true` plus `EXA_API_KEY`; a key alone does not turn it on.
 - **Document library (primary source):** the template's Pinecone RAG pipeline (`RAGloader/`) ingests the Act text into the `aegis-eu-ai-act` index. Aegis searches it first on every substantive question; when it finds nothing or is unavailable, Aegis falls back to the built-in reference and says so. It switches on automatically once `PINECONE_API_KEY` is set.
 
+## One deployment: presentation at `/`, chatbot at `/chat`
+
+| URL | What it is |
+|---|---|
+| `/` | The static presentation site (4 slides plus a "Talk to Aegis" tab), served from [`public/presentation/`](public/presentation) through a rewrite in [`next.config.ts`](next.config.ts) |
+| `/chat` | The Aegis chatbot ([`app/chat/page.tsx`](app/chat/page.tsx)) |
+| `/terms` | Terms of Use |
+
+The presentation's "Launch the Copilot" button opens `/chat`, and "Show it here" embeds it. Presenting: `←` `→` change slide, `N` toggles speaker notes, `F` goes fullscreen. Slide content is in `public/presentation/index.html`; `CHATBOT_URL` at the top of `public/presentation/app.js` defaults to `/chat`.
+
 ## Deploy on Vercel
 
-1. Vercel → **Add New → Project** → import this GitHub repo (framework: Next.js, defaults are fine).
+1. Vercel → **Add New → Project** → import this GitHub repo (framework: Next.js, defaults are fine). This one project serves everything above.
 2. **Settings → Environment Variables:**
 
 | Variable | Required? | Purpose |
@@ -326,7 +336,7 @@ The registry is deliberately limited to cost-appropriate chatbot tiers. Premium 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `ENABLE_VECTOR_SEARCH` (env var) | `true` | Set env `ENABLE_VECTOR_SEARCH=false` to disconnect the knowledge base entirely (KB tool removed from the model, no Pinecone connection, `PINECONE_API_KEY` not needed) |
-| `PINECONE_INDEX_NAME` | `"myai6"` | Your Pinecone index name (lowercase letters, numbers, hyphens) |
+| `PINECONE_INDEX_NAME` (env var) | `"aegis-eu-ai-act"` | Your Pinecone index name (lowercase letters, numbers, hyphens). Set it as an environment variable in Vercel or `.env.local`; `config.ts` reads it |
 | `PINECONE_TOP_K` | `20` | Children retrieved per search |
 | `PINECONE_MIN_SCORE` | `0.1` | Minimum relevance score (0-1) |
 | `PINECONE_USE_PARENT_CHILD` | `true` | Use 3-namespace architecture |
@@ -357,7 +367,7 @@ Update `KB_SCOPE` whenever you ingest new content. The model uses it to decide w
 
 **Switch to a different Pinecone index:**
 1. Change the `PINECONE_API_KEY` env var (if the index lives in a different Pinecone account)
-2. Change `PINECONE_INDEX_NAME` in `config.ts`
+2. Change the `PINECONE_INDEX_NAME` environment variable
 3. Rewrite `KB_SCOPE` to describe the new content
 4. Redeploy
 
