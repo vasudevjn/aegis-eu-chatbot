@@ -55,6 +55,9 @@ export default function Chat() {
   const [activeConvId, setActiveConvId] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showContextMemory, setShowContextMemory] = useState(false);
+  // true when shown inside the presentation site's "Talk to Aegis" tab (/chat?embed=1):
+  // the host page already shows the logo and name. null until known, so the brand never flashes.
+  const [embedded, setEmbedded] = useState<boolean | null>(null);
   const welcomeMessageShownRef = useRef<boolean>(false);
 
   // Compaction state: stored summary persists across requests
@@ -124,6 +127,7 @@ export default function Chat() {
   // Initialize: migrate legacy storage, load or create conversation
   useEffect(() => {
     setIsClient(true);
+    setEmbedded(new URLSearchParams(window.location.search).get("embed") === "1");
 
     // Migrate from old single-chat format if present
     const migratedId = migrateFromLegacyStorage();
@@ -329,13 +333,15 @@ export default function Chat() {
               </Button>
             </ChatHeaderBlock>
             <ChatHeaderBlock className="justify-center items-center">
-              <div className="flex flex-col items-center leading-tight text-center">
-                <span className="flex items-center gap-1.5 text-sm font-semibold">
-                  <Image src="/logo.png" alt="" width={22} height={22} priority />
-                  {AI_NAME}
-                </span>
-                <span className="hidden sm:block text-[11px] text-muted-foreground">{AI_TAGLINE}</span>
-              </div>
+              {embedded === false && (
+                <div className="flex flex-col items-center leading-tight text-center">
+                  <span className="flex items-center gap-1.5 text-sm font-semibold">
+                    <Image src="/logo.png" alt="" width={22} height={22} priority />
+                    {AI_NAME}
+                  </span>
+                  <span className="hidden sm:block text-[11px] text-muted-foreground">{AI_TAGLINE}</span>
+                </div>
+              )}
             </ChatHeaderBlock>
 
             <ChatHeaderBlock className="justify-end gap-2">
@@ -504,16 +510,29 @@ export default function Chat() {
 
             <div className="mt-2 text-center text-xs text-muted-foreground">
               &copy; {new Date().getFullYear()} {OWNER_NAME} · Not legal advice ·{" "}
-              {/* "/" is the presentation site; target _top so it also works when this page is embedded in it. */}
-              <a href="/" target="_top" className="underline">
-                About Aegis
-              </a>{" "}
-              ·{" "}
-              <Link href="/terms" className="underline">
+              {/* "/" is the presentation site. Hidden when embedded in it (the host already is that page). */}
+              {embedded === false && (
+                <>
+                  <a href="/" className="underline">
+                    About Aegis
+                  </a>{" "}
+                  ·{" "}
+                </>
+              )}
+              {/* Inside the presentation, open links in a new tab so the chat keeps its place. */}
+              <Link
+                href="/terms"
+                className="underline"
+                {...(embedded ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 Terms of Use
               </Link>{" "}
               · Built on{" "}
-              <Link href="https://www.ringel.ai" className="underline">
+              <Link
+                href="https://www.ringel.ai"
+                className="underline"
+                {...(embedded ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 ringel.AI
               </Link>
             </div>

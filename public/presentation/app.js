@@ -2,18 +2,19 @@
 // Aegis presentation site: tab routing and keyboard navigation.
 // ---------------------------------------------------------------------------
 
-// The chatbot lives in the same deployment at /chat. Change this only if you host it elsewhere
-// (e.g. "https://your-chatbot.vercel.app"). Empty disables the "Launch the Copilot" button.
-const CHATBOT_URL = "/chat";
+// The "Talk to Aegis" tab shows the chatbot itself, embedded in this page. It lives in the same
+// deployment at /chat; "?embed=1" tells it to drop its own logo and name (this page already has them).
+const CHAT_URL = "/chat?embed=1";
 
 const SLIDES = ["problem", "choice", "value", "risks", "chat"];
 
-const $ =(sel, root = document) => root.querySelector(sel);
+const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const tabs = $$(".tabs [role=tab]");
 const slides = SLIDES.map((id) => document.getElementById(id));
 const counter = $("#counter");
+const chatFrame = $("#chatFrame");
 
 let current = 0;
 
@@ -42,6 +43,24 @@ function show(i, { updateHash = true } = {}) {
       ? "Aegis · EU AI Act Compliance Copilot"
       : `${slides[current].dataset.title} · Aegis`;
   if (updateHash && location.hash !== `#${id}`) history.replaceState(null, "", `#${id}`);
+  if (id === "chat") openChat();
+}
+
+// The chat loads on first visit and then stays alive, so the conversation survives switching tabs.
+function openChat() {
+  if (!chatFrame.getAttribute("src")) {
+    chatFrame.addEventListener("load", focusChatInput, { once: true });
+    chatFrame.src = CHAT_URL;
+  } else {
+    focusChatInput();
+  }
+}
+function focusChatInput() {
+  try {
+    chatFrame.contentDocument?.querySelector("textarea")?.focus();
+  } catch {
+    // cross-origin chat (if CHAT_URL ever points elsewhere): nothing to focus
+  }
 }
 
 tabs.forEach((t) => t.addEventListener("click", () => show(SLIDES.indexOf(t.dataset.slide))));
@@ -104,51 +123,6 @@ riskTabs.forEach((t, i) => {
   t.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); selectRisk((i + 1) % riskTabs.length, true); }
     if (e.key === "ArrowUp") { e.preventDefault(); selectRisk((i - 1 + riskTabs.length) % riskTabs.length, true); }
-  });
-});
-
-// ---- Chatbot tab ----
-const launchBtn = $("#launchBtn");
-const launchHint = $("#launchHint");
-const embedBtn = $("#embedBtn");
-const embedWrap = $("#embedWrap");
-const embedFrame = $("#embedFrame");
-
-if (CHATBOT_URL) {
-  launchBtn.href = CHATBOT_URL;
-  embedBtn.hidden = false;
-  embedBtn.addEventListener("click", () => {
-    const open = embedWrap.hidden;
-    if (open && !embedFrame.src) embedFrame.src = CHATBOT_URL;
-    embedWrap.hidden = !open;
-    embedBtn.setAttribute("aria-expanded", String(open));
-    embedBtn.textContent = open ? "Hide it" : "Show it here";
-  });
-} else {
-  launchBtn.setAttribute("aria-disabled", "true");
-  launchBtn.removeAttribute("target");
-  launchBtn.addEventListener("click", (e) => e.preventDefault());
-  launchHint.hidden = false;
-}
-
-// ---- Example prompts: copy to clipboard (the chatbot has no deep-link for prompts) ----
-const toast = $("#toast");
-let toastTimer;
-function showToast(msg) {
-  toast.textContent = msg;
-  toast.hidden = false;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => (toast.hidden = true), 2200);
-}
-$$(".prompt-chip").forEach((chip) => {
-  chip.addEventListener("click", async () => {
-    const text = chip.textContent.trim();
-    try {
-      await navigator.clipboard.writeText(text);
-      showToast("Copied. Paste it into Aegis.");
-    } catch {
-      showToast("Select the text and copy it manually.");
-    }
   });
 });
 

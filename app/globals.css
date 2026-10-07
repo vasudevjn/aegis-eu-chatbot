@@ -13,7 +13,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  /* Same system font stack as the presentation site, so the embedded chat looks native there. */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -51,38 +52,40 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.995 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.1 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Aegis palette, shared with the presentation site (public/presentation/styles.css):
+     navy from the logo, indigo and soft lavender accents on a near-white ground. */
+  --radius: 0.875rem;
+  --background: #fdfdfd;
+  --foreground: #192a58;
+  --card: #ffffff;
+  --card-foreground: #192a58;
+  --popover: #ffffff;
+  --popover-foreground: #192a58;
+  --primary: #192a58;
+  --primary-foreground: #ffffff;
+  --secondary: #eef1ff;
+  --secondary-foreground: #192a58;
+  --muted: #f3f5ff;
+  --muted-foreground: #59658c;
+  --accent: #e8ecff;
+  --accent-foreground: #192a58;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #dde2f4;
+  --input: #dde2f4;
+  --ring: #4658d6;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #f6f7ff;
+  --sidebar-foreground: #192a58;
+  --sidebar-primary: #192a58;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8ecff;
+  --sidebar-accent-foreground: #192a58;
+  --sidebar-border: #dde2f4;
+  --sidebar-ring: #4658d6;
 }
 
 .dark {

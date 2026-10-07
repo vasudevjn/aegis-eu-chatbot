@@ -46,24 +46,20 @@ I'm a first-line governance tool, not a lawyer. Use my output to prepare for for
 // One-click prompts shown under the welcome message on a fresh chat.
 export const STARTER_PROMPTS = [
   {
-    label: "Assess a hiring tool",
-    prompt:
-      "We use an AI model to screen job applications and rank candidates based on their CV and interview responses. Run a compliance assessment.",
+    label: "Hiring tool",
+    prompt: "We use an AI model to screen job applications and rank candidates.",
   },
   {
     label: "Customer-service chatbot",
-    prompt:
-      "We're launching a customer-service chatbot built on a third-party LLM API for EU customers. What do we need to do under the AI Act?",
+    prompt: "Our app has a customer-service chatbot built on a third-party LLM.",
   },
   {
-    label: "What applies in 2026?",
-    prompt:
-      "Which EU AI Act obligations already apply today, and what is coming next? Give me the timeline.",
+    label: "AI marketing images",
+    prompt: "We generate marketing images with AI for EU campaigns.",
   },
   {
-    label: "Generate an AI register",
-    prompt:
-      "Create a template AI governance register we can use to inventory all our AI systems for EU AI Act compliance.",
+    label: "Credit scoring",
+    prompt: "Our credit-scoring model decides loan eligibility.",
   },
 ] as const;
 export const CLEAR_CHAT_TEXT = "New";

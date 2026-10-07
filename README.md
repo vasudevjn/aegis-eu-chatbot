@@ -34,10 +34,10 @@ Aegis then runs a structured assessment:
 | URL | What it is |
 |---|---|
 | `/` | The static presentation site (4 slides plus a "Talk to Aegis" tab), served from [`public/presentation/`](public/presentation) through a rewrite in [`next.config.ts`](next.config.ts) |
-| `/chat` | The Aegis chatbot ([`app/chat/page.tsx`](app/chat/page.tsx)) |
+| `/chat` | The Aegis chatbot ([`app/chat/page.tsx`](app/chat/page.tsx)); `/chat?embed=1` is the compact version shown inside the presentation |
 | `/terms` | Terms of Use |
 
-The presentation's "Launch the Copilot" button opens `/chat`, and "Show it here" embeds it. Presenting: `←` `→` change slide, `F` goes fullscreen. Slide content is in `public/presentation/index.html`; `CHATBOT_URL` at the top of `public/presentation/app.js` defaults to `/chat`.
+The presentation's "Talk to Aegis" tab shows the chatbot itself inside the same page (it loads `/chat?embed=1`, which hides the chat's own logo and name because the presentation header already has them). Presenting: `←` `→` change slide, `F` goes fullscreen. Slide content is in `public/presentation/index.html`. The chatbot and the presentation share one palette and font: the colour tokens in `app/globals.css` mirror `public/presentation/styles.css`, so change them together.
 
 ## Deploy on Vercel
 

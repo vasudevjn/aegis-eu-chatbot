@@ -22,7 +22,7 @@
   </a>
   <nav class="tabs" role="tablist" aria-label="Presentation sections">
     <button role="tab" id="tab-problem" data-slide="problem" aria-controls="problem"><span class="n">1</span>The Problem</button>
-    <button role="tab" id="tab-choice" data-slide="choice" aria-controls="choice"><span class="n">2</span>The Choice <span class="sub">(Shreyas &amp; Preyas)</span></button>
+    <button role="tab" id="tab-choice" data-slide="choice" aria-controls="choice"><span class="n">2</span>The Choice</button>
     <button role="tab" id="tab-value" data-slide="value" aria-controls="value"><span class="n">3</span>Business Value</button>
     <button role="tab" id="tab-risks" data-slide="risks" aria-controls="risks"><span class="n">4</span>Risks &amp; Safeguards</button>
     <button role="tab" id="tab-chat" data-slide="chat" aria-controls="chat" class="cta">Talk to Aegis <span aria-hidden="true">→</span></button>
@@ -285,38 +285,10 @@
   </div>
 </section>
 
-<!-- ============ CHATBOT TAB ============ -->
-<section class="slide" id="chat" role="tabpanel" aria-labelledby="tab-chat" data-title="Talk to Aegis" hidden>
-  <div class="wrap narrow">
-    <div class="chat-hero">
-      <div>
-        <p class="eyebrow">Talk to Aegis</p>
-        <h1>Describe your AI system. Get your compliance roadmap.</h1>
-        <p class="lede">Tell Aegis what your AI product does in plain language. It will classify the risk, map your obligations and give you a prioritized action plan.</p>
-      </div>
-      <img class="lockup" src="/presentation/assets/logo.jpeg" alt="Aegis logo: a shield with the tagline Ask, Assess, Comply" width="220" height="220">
-    </div>
-
-    <div class="launch">
-      <a class="btn primary" id="launchBtn" href="#" target="_blank" rel="noopener">Launch the Copilot <span aria-hidden="true">→</span></a>
-      <button class="btn ghost" id="embedBtn" type="button" hidden aria-expanded="false" aria-controls="embedWrap">Show it here</button>
-      <p class="hint" id="launchHint" hidden>Set <code>CHATBOT_URL</code> at the top of <code>app.js</code> to enable this button.</p>
-    </div>
-
-    <div class="embed" id="embedWrap" hidden>
-      <iframe id="embedFrame" title="Aegis chatbot" loading="lazy" allow="clipboard-write"></iframe>
-    </div>
-
-    <h2 class="section-label">Try an example <span class="muted">(click to copy, then paste into Aegis)</span></h2>
-    <div class="chips" id="chips">
-      <button class="prompt-chip" type="button">We use an AI model to screen job applications and rank candidates.</button>
-      <button class="prompt-chip" type="button">Our app has a customer-service chatbot built on a third-party LLM.</button>
-      <button class="prompt-chip" type="button">We generate marketing images with AI for EU campaigns.</button>
-      <button class="prompt-chip" type="button">Our credit-scoring model decides loan eligibility.</button>
-    </div>
-
-    <p class="disclosure" role="note"><strong>You are interacting with an AI system.</strong> Aegis provides guidance based on the EU AI Act and is not a substitute for legal advice. Please don't share personal data you aren't authorized to share.</p>
-  </div>
+<!-- ============ CHATBOT TAB: the chatbot itself, embedded in this page ============ -->
+<section class="slide slide-chat" id="chat" role="tabpanel" aria-labelledby="tab-chat" data-title="Talk to Aegis" hidden>
+  <p class="chat-note" role="note"><strong>You are interacting with an AI system.</strong> Aegis provides guidance based on the EU AI Act and is not a substitute for legal advice. Please don't share personal data you aren't authorized to share.</p>
+  <iframe id="chatFrame" class="chat-frame" title="Aegis, the EU AI Act compliance chatbot" allow="clipboard-write"></iframe>
 </section>
 
 </main>
@@ -326,8 +298,6 @@
   <span>Based on Regulation (EU) 2024/1689 (the EU AI Act), as amended by Regulation (EU) 2026/1744. Aegis gives guidance, not legal advice.</span>
   <span class="counter" id="counter" aria-hidden="true">1 / 5</span>
 </footer>
-
-<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="/presentation/app.js"></script>
 </body>
