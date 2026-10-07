@@ -37,7 +37,7 @@ Aegis then runs a structured assessment:
 | `/chat` | The Aegis chatbot ([`app/chat/page.tsx`](app/chat/page.tsx)) |
 | `/terms` | Terms of Use |
 
-The presentation's "Launch the Copilot" button opens `/chat`, and "Show it here" embeds it. Presenting: `←` `→` change slide, `N` toggles speaker notes, `F` goes fullscreen. Slide content is in `public/presentation/index.html`; `CHATBOT_URL` at the top of `public/presentation/app.js` defaults to `/chat`.
+The presentation's "Launch the Copilot" button opens `/chat`, and "Show it here" embeds it. Presenting: `←` `→` change slide, `F` goes fullscreen. Slide content is in `public/presentation/index.html`; `CHATBOT_URL` at the top of `public/presentation/app.js` defaults to `/chat`.
 
 ## Deploy on Vercel
 

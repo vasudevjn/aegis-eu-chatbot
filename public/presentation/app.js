@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Aegis presentation site: tab routing, keyboard navigation, speaker notes.
+// Aegis presentation site: tab routing and keyboard navigation.
 // ---------------------------------------------------------------------------
 
 // The chatbot lives in the same deployment at /chat. Change this only if you host it elsewhere
@@ -8,27 +8,11 @@ const CHATBOT_URL = "/chat";
 
 const SLIDES = ["problem", "choice", "value", "risks", "chat"];
 
-const NOTES = {
-  problem:
-    "Every company bringing AI into Europe has to answer three questions: does it apply, what must we do, and are we still compliant. Today those answers come too late and cost too much.",
-  choice:
-    "The Katha Upanishad describes Preyas, the pleasant, and Shreyas, the good. Shipping first and fixing compliance later is Preyas. Aegis makes Shreyas the practical choice.",
-  value:
-    "Doing it right the first time is faster and cheaper, and it builds the trust that wins enterprise deals.",
-  risks:
-    "We are an AI that checks AI, so we hold ourselves to the same standard: grounded, cited, current, and honest about what is in place today versus what is still on the roadmap.",
-  chat:
-    "Now the live part: describe a system in plain language and watch Aegis classify it, map the obligations and give a prioritized action plan.",
-};
-
-const $ = (sel, root = document) => root.querySelector(sel);
+const $ =(sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const tabs = $$(".tabs [role=tab]");
 const slides = SLIDES.map((id) => document.getElementById(id));
-const notesEl = $("#notes");
-const notesText = $("#notesText");
-const notesToggle = $("#notesToggle");
 const counter = $("#counter");
 
 let current = 0;
@@ -52,7 +36,6 @@ function show(i, { updateHash = true } = {}) {
     t.tabIndex = k === current ? 0 : -1;
   });
   const id = SLIDES[current];
-  notesText.textContent = NOTES[id];
   counter.textContent = `${current + 1} / ${SLIDES.length}`;
   document.title =
     current === 0
@@ -70,14 +53,7 @@ $(".brand").addEventListener("click", (e) => {
   show(0);
 });
 
-// ---- Speaker notes ----
-function setNotes(on) {
-  notesEl.hidden = !on;
-  notesToggle.setAttribute("aria-pressed", String(on));
-}
-notesToggle.addEventListener("click", () => setNotes(notesEl.hidden));
-
-// ---- Keyboard: arrows / space / PageUp-Down / Home-End, N notes, F fullscreen ----
+// ---- Keyboard: arrows / PageUp-Down / Home-End, F fullscreen ----
 document.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const tag = (e.target.tagName || "").toLowerCase();
@@ -103,10 +79,6 @@ document.addEventListener("keydown", (e) => {
     case "End":
       e.preventDefault();
       show(SLIDES.length - 1);
-      break;
-    case "n":
-    case "N":
-      setNotes(notesEl.hidden);
       break;
     case "f":
     case "F":

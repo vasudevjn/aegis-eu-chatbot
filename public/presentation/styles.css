@@ -78,12 +78,9 @@ code { background: var(--panel-2); padding: 0.1em 0.4em; border-radius: 6px; fon
 .tabs button.cta:hover { background: var(--accent); color: #fff; }
 .tabs button.cta[aria-selected="true"] { background: var(--text); color: #fff; box-shadow: 0 0 0 3px rgba(70, 88, 214, 0.28); }
 
-.notes-toggle {
   appearance: none; cursor: pointer; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--muted);
   background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
 }
-.notes-toggle:hover { color: var(--text); border-color: var(--accent); }
-.notes-toggle[aria-pressed="true"] { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
 
 /* ---------- Stage / slides ---------- */
 #stage { position: fixed; inset: var(--top) 0 var(--foot) 0; overflow: hidden; }
@@ -129,12 +126,10 @@ h1 em { font-style: normal; color: var(--accent); }
 .fine { margin: 12px 0 0; font-size: 0.8rem; color: var(--muted); }
 
 /* ---------- Slide 2 ---------- */
-.verse-row { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; align-items: stretch; margin: 6px 0 8px; }
-.verse { margin: 0; padding: 22px 26px; background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); }
-.sanskrit { font-family: var(--serif); font-size: clamp(1.15rem, 2.1vw, 1.6rem); color: var(--gold); line-height: 1.5; margin: 0 0 12px; }
-.translation { margin: 0 0 10px; font-family: var(--serif); font-style: italic; color: var(--text); font-size: 1.05rem; }
-.verse footer { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
-.story { display: flex; align-items: center; padding: 4px 6px; color: var(--body); }
+.story-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(18px, 3vw, 34px); align-items: center; margin: 6px 0 8px; }
+.story-art { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: #1a1626; }
+.story-art img { display: block; width: 100%; height: auto; }
+.story { display: flex; align-items: center; padding: 4px 6px; color: var(--body); font-size: clamp(1rem, 1.5vw, 1.15rem); line-height: 1.65; }
 .story p { margin: 0; }
 .story strong.gold, .story strong.rose { font-weight: 800; }
 
@@ -215,12 +210,7 @@ h1 em { font-style: normal; color: var(--accent); }
 .disclosure { margin-top: 26px; padding: 14px 18px; border-radius: 12px; border: 1px dashed var(--peri); color: var(--body); font-size: 0.92rem; background: var(--bg-2); }
 .disclosure strong { color: var(--text); }
 
-/* ---------- Notes, footer, toast ---------- */
-.notes { position: fixed; left: 0; right: 0; bottom: var(--foot); z-index: 15; padding: 14px clamp(16px, 4vw, 56px); background: var(--text); border-top: 3px solid var(--peri); }
-.notes[hidden] { display: none; }
-.notes p { margin: 0 auto; max-width: 1120px; }
-.notes .notes-label { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mint-fill); font-weight: 800; margin-bottom: 4px; }
-#notesText { font-family: var(--serif); font-size: 1.1rem; color: #fff; }
+/* ---------- Footer, toast ---------- */
 
 .site-footer { position: fixed; inset: auto 0 0 0; height: var(--foot); z-index: 20; display: flex; align-items: center; gap: 16px; padding: 0 clamp(14px, 3vw, 36px); border-top: 1px solid var(--line); background: rgba(253, 253, 253, 0.95); font-size: 0.74rem; color: var(--muted); }
 .site-footer strong { color: var(--text); }
@@ -239,9 +229,8 @@ h1 em { font-style: normal; color: var(--accent); }
   .topbar { flex-wrap: wrap; align-content: center; gap: 4px 12px; padding-top: 6px; padding-bottom: 6px; }
   .mark { width: 36px; }
   .tabs { order: 3; width: 100%; margin-left: 0; overflow-x: auto; padding-bottom: 2px; }
-  .notes-toggle { margin-left: auto; }
   .cols-3, .cols-4 { grid-template-columns: 1fr 1fr; }
-  .verse-row, .risk-board { grid-template-columns: 1fr; }
+  .story-row, .risk-board { grid-template-columns: 1fr; }
   .versus { grid-template-columns: 1fr; }
   .vs { display: none; }
   .chat-hero { grid-template-columns: 1fr; }
@@ -259,7 +248,7 @@ h1 em { font-style: normal; color: var(--accent); }
 }
 @media print {
   body { overflow: visible; background: #fff; }
-  .topbar, .site-footer, .notes, .toast { display: none; }
+  .topbar, .site-footer, .toast { display: none; }
   #stage { position: static; }
   .slide, .slide[hidden] { position: static; display: block; page-break-after: always; overflow: visible; }
 }
