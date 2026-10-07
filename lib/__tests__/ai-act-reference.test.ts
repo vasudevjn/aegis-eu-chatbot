@@ -34,4 +34,16 @@ describe("EU AI Act reference", () => {
       expect(all).toContain(fact);
     }
   });
+
+  it("reflects the Digital Omnibus on AI as adopted law, not a pending proposal", () => {
+    const [timeline] = getSections(["timeline"]);
+    for (const fact of ["2026/1744", "2 December 2027", "2 August 2028", "2 December 2026"]) {
+      expect(timeline.content).toContain(fact);
+    }
+    expect(timeline.content).not.toContain("PENDING CHANGE");
+    // The superseded high-risk dates must not be presented as current.
+    const [classification] = getSections(["high-risk-classification"]);
+    expect(classification.content).not.toContain("Applies from 2 August 2026");
+    expect(classification.content).not.toContain("applies from 2 August 2027.");
+  });
 });

@@ -18,7 +18,8 @@ export type ThinkingLevel = "off" | "low" | "medium" | "high";
 // Deliberately limited to cost-appropriate chatbot tiers — premium models
 // (Claude Fable/Opus, GPT-5.6 Sol, "pro" variants) are excluded: their cost
 // per request makes no sense for a public-facing chatbot.
-// Default is and should remain Anthropic + Haiku (see DEFAULT_* in config.ts).
+// Default is Anthropic + Sonnet 5.5 (see DEFAULT_* in config.ts); Haiku 4.5 is the
+// economy option and the default utility model.
 // Anthropic: models newer than Haiku 4.5 use adaptive thinking (see anthropicThinkingOptions).
 // Fireworks: IDs require the full "accounts/fireworks/models/" prefix; new open-source
 // models ship to Fireworks within days — check fireworks.ai for the current catalog.
@@ -27,7 +28,8 @@ export const MODEL_OPTIONS: Record<
   { id: string; label: string; mode: Mode | "both" }[]
 > = {
   anthropic: [
-    { id: "claude-haiku-4-5", label: "Claude Haiku 4.5 (default)", mode: "both" },
+    { id: "claude-haiku-4-5", label: "Claude Haiku 4.5 (economy)", mode: "both" },
+    { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5 (default)", mode: "both" },
     { id: "claude-sonnet-5", label: "Claude Sonnet 5", mode: "both" },
     { id: "claude-sonnet-4-6", label: "Claude Sonnet 4.6", mode: "both" },
   ],

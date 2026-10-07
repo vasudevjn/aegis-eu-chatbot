@@ -9,10 +9,39 @@ import { rewriteCitationsInParts } from "@/lib/citations";
 import type { UISource } from "@/types/data";
 import { AssemblingIndicator } from "../ai-elements/assembling-indicator";
 import { ProcessingIndicator } from "../ai-elements/processing-indicator";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { ThumbsUp, ThumbsDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { saveFeedback, loadFeedback } from "@/lib/storage";
+import { buildExportMarkdown, downloadMarkdown } from "@/lib/export";
+import { REFERENCE_REVIEWED_ON } from "@/lib/ai-act/meta";
+import { AI_NAME } from "@/config";
+
+/** Saves just this answer (with its Sources) as a Markdown file. */
+function DownloadAnswerButton({ message }: { message: UIMessage }) {
+  function download() {
+    const markdown = buildExportMarkdown([message], {
+      aiName: AI_NAME,
+      referenceReviewedOn: REFERENCE_REVIEWED_ON,
+      roleLabels: false,
+    });
+    if (!markdown) return;
+    downloadMarkdown(`${AI_NAME}-answer-${new Date().toISOString().slice(0, 10)}.md`, markdown);
+  }
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className="h-7 w-7 mt-1 text-muted-foreground hover:text-foreground"
+      onClick={download}
+      aria-label="Download this answer as Markdown"
+      title="Download this answer as Markdown"
+    >
+      <Download className="size-3.5" />
+    </Button>
+  );
+}
 
 function FeedbackButtons({ messageId, conversationId }: { messageId: string; conversationId?: string }) {
   const [rating, setRating] = useState<"up" | "down" | null>(() => {
@@ -198,7 +227,12 @@ export function AssistantMessage({
         })}
       </div>
       {sources.length > 0 && <Sources sources={sources} />}
-      {showFeedback && <FeedbackButtons messageId={message.id} conversationId={conversationId} />}
+      {showFeedback && (
+        <div className="flex items-center gap-1">
+          <FeedbackButtons messageId={message.id} conversationId={conversationId} />
+          <DownloadAnswerButton message={message} />
+        </div>
+      )}
     </div>
   );
 }

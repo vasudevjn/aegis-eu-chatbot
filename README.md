@@ -17,7 +17,7 @@ Aegis then runs a structured assessment:
 | ✅ Compliance check | Targeted questions on existing controls, marked ✅ / ⚠️ / ❌. |
 | 🛠️ Recommend actions | Prioritised P0 / P1 / P2 action plan, each step tied to an article and the evidence it produces. |
 | 📄 Generate evidence | Draft artefacts: risk checklists, Annex IV documentation outlines, AI governance registers, FRIA outlines, disclosure text, incident runbooks, questions for legal and security. Exportable as Markdown. |
-| 🔄 Stay current | Date-aware phased timeline (Art. 113), flags pending amendments such as the Digital Omnibus, and (with web search on) checks official EU sources for the latest guidance. |
+| 🔄 Stay current | Date-aware phased timeline (Art. 113), reflects the Digital Omnibus on AI (Regulation (EU) 2026/1744, in force 27 July 2026) and flags points still to be verified, and (with web search on) checks official EU sources for the latest guidance. |
 
 **Who it's for:** product managers, engineering and data teams, legal and compliance teams, and business leaders.
 
@@ -26,8 +26,8 @@ Aegis then runs a structured assessment:
 ## How it's grounded
 
 - **Built-in legal reference** ([`lib/ai-act/reference.ts`](lib/ai-act/reference.ts)): 16 curated, article-level sections of Regulation (EU) 2024/1689 (scope, roles, AI literacy, prohibited practices, high-risk classification, Annex III, the Art. 6(3) exception, Arts. 8–15 requirements, provider and deployer duties, FRIA, Art. 50 transparency, GPAI, incident reporting, timeline, penalties, sandboxes). Each section links to the official EUR-Lex text. It is served by the `aiActReference` tool, needs no external service, and every answer cites it inline with a Sources box.
-- **Web search (optional, recommended):** Exa, steered to official EU domains, for amendment status, new guidelines, codes of practice and standards.
-- **Document library (optional):** the template's Pinecone RAG pipeline (`RAGloader/`) can ingest the full Act text, recitals and Commission guidelines into the `aegis-eu-ai-act` index. It switches on automatically once `PINECONE_API_KEY` is set.
+- **Web search (off by default):** Exa, steered to official EU domains. Opt in with `ENABLE_WEB_SEARCH=true` plus `EXA_API_KEY`; a key alone does not turn it on.
+- **Document library (primary source):** the template's Pinecone RAG pipeline (`RAGloader/`) ingests the Act text into the `aegis-eu-ai-act` index. Aegis searches it first on every substantive question; when it finds nothing or is unavailable, Aegis falls back to the built-in reference and says so. It switches on automatically once `PINECONE_API_KEY` is set.
 
 ## Deploy on Vercel
 
@@ -37,7 +37,7 @@ Aegis then runs a structured assessment:
 | Variable | Required? | Purpose |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | **Required** | Chat model, moderation, summaries |
-| `EXA_API_KEY` | Recommended | Live regulatory updates via web search |
+| `EXA_API_KEY` | Optional | Only used if `ENABLE_WEB_SEARCH=true` (web search is off by default) |
 | `PINECONE_API_KEY` | Optional | Only after ingesting documents into the `aegis-eu-ai-act` index |
 | `SUMMARY_HMAC_SECRET` | Optional | Any long random string (signs conversation summaries) |
 
@@ -47,7 +47,7 @@ Local: `cp env.template .env.local`, add your key, then `npm install && npm run 
 
 ## Maintaining the legal content
 
-When the law, its guidance or the dates change (e.g. the Digital Omnibus is adopted), edit the relevant section in `lib/ai-act/reference.ts` and update `REFERENCE_REVIEWED_ON`. The assessment workflow and output format live in `WORKFLOW_PROMPT` in [`prompts.ts`](prompts.ts). Branding, welcome text and starter prompts are in [`config.ts`](config.ts).
+When the law, its guidance or the dates change (e.g. a further amendment, or the final text settles a point the reference marks as unverified), edit the relevant section in `lib/ai-act/reference.ts` and update `REFERENCE_REVIEWED_ON`. The assessment workflow and output format live in `WORKFLOW_PROMPT` in [`prompts.ts`](prompts.ts). Branding, welcome text and starter prompts are in [`config.ts`](config.ts).
 
 ---
 
@@ -102,8 +102,8 @@ cp env.template .env.local
 
 | Variable | Values | What it does when you change it |
 |----------|--------|--------------------------------|
-| `ENABLE_VECTOR_SEARCH` | `true` (default) / `false` | `false` disconnects the knowledge base — the bot stops searching Pinecone and answers from general knowledge |
-| `ENABLE_WEB_SEARCH` | `true` (default) / `false` | `false` disables web search |
+| `ENABLE_VECTOR_SEARCH` | `true` (default) / `false` | `false` disconnects the knowledge base — the bot stops searching Pinecone and answers from the built-in reference, saying so |
+| `ENABLE_WEB_SEARCH` | `false` (default) / `true` | `true` plus `EXA_API_KEY` enables web search; otherwise Aegis uses only the document library and the built-in reference |
 | `MODERATION_PROVIDER` | `llm` (default) / `openai` / `off` | Which service safety-checks user messages: `llm` = fast LLM classifier on the utility model, `openai` = OpenAI moderation API, `off` = none |
 
 **Optional security variables** (generate values with `openssl rand -hex 32`):
@@ -158,7 +158,7 @@ User Question
 1. User sends a message via the chat UI (`app/page.tsx`)
 2. `POST /api/chat` validates input (message count, length, rate limit, compaction-summary signature)
 3. Moderation checks the message (LLM classifier on the utility model by default; configurable via `MODERATION_PROVIDER`)
-4. The LLM (default: Claude Haiku 4.5) processes the message with available tools
+4. The LLM (default: Claude Sonnet 5.5) processes the message with available tools
 5. Tool priority: knowledge base first; web search to supplement; live profile fetch (`fetchOwnerProfiles`) first for latest-info-on-owner questions
 6. Response streams back with inline `[[N]](url)` citations; citations are canonicalized at render time and the cited sources stream as a `data-sources` part rendered as the Sources box
 
@@ -278,7 +278,7 @@ The change goes live in about a minute. To undo it, either delete the variable (
 | Parameter | Default | Options |
 |-----------|---------|---------|
 | `DEFAULT_VENDOR` | `"anthropic"` | `"anthropic"`, `"openai"`, `"fireworks"` — vendor for the chat model |
-| `DEFAULT_MODEL_ID` | `"claude-haiku-4-5"` | See model registry below |
+| `DEFAULT_MODEL_ID` | `"claude-sonnet-5-5"` | See model registry below |
 | `DEFAULT_MODE` | `"chat"` | `"chat"`, `"reasoning"` |
 | `DEFAULT_THINKING_LEVEL` | `"medium"` | `"off"`, `"low"`, `"medium"`, `"high"` — level used when reasoning mode is triggered |
 | `CHAT_THINKING_LEVEL` | `"low"` | Thinking level in plain chat mode (`"low"`, `"medium"`, `"high"`) |
@@ -290,11 +290,12 @@ The chat model and the utility model are independent: you can run chat on one ve
 
 **Available Models** (verified August 2026 against the official vendor docs):
 
-The registry is deliberately limited to cost-appropriate chatbot tiers. Premium models (Claude Fable/Opus, GPT-5.6 Sol, "pro" variants) are excluded — their per-request cost makes no sense for a public-facing chatbot. **Anthropic + Haiku is and should remain the default.**
+The registry is deliberately limited to cost-appropriate chatbot tiers. Premium models (Claude Fable/Opus, GPT-5.6 Sol, "pro" variants) are excluded — their per-request cost makes no sense for a public-facing chatbot. **Anthropic is the default vendor and Sonnet 5.5 the default model; Haiku 4.5 remains the economy option and the default utility model.**
 
 | Vendor | Model ID | Modes | Pricing (in/out per M tokens) | Notes |
 |--------|----------|-------|-------------------------------|-------|
-| anthropic | `claude-haiku-4-5` | chat + reasoning | $1 / $5 | **Default.** Fastest; 200K context, 64K max output |
+| anthropic | `claude-haiku-4-5` | chat + reasoning | $1 / $5 | Economy option and default utility model. Fastest; 200K context, 64K max output |
+| anthropic | `claude-sonnet-5-5` | chat + reasoning | see Anthropic pricing | **Default.** Adaptive thinking. Added after the August 2026 verification, so confirm limits and pricing |
 | anthropic | `claude-sonnet-5` | chat + reasoning | $2 / $10 (intro through Aug 2026, then $3 / $15) | Best speed/intelligence balance; 1M context |
 | anthropic | `claude-sonnet-4-6` | chat + reasoning | $3 / $15 | Previous Sonnet (legacy, still active); 1M context |
 | openai | `gpt-5.6-luna` | chat + reasoning | $0.20 / $1.20 | Economy; long context |
@@ -315,7 +316,7 @@ The registry is deliberately limited to cost-appropriate chatbot tiers. Premium 
 | Model generation | Thinking config sent |
 |------------------|---------------------|
 | Haiku 4.5 (and older) | Fixed token budget (`THINKING_BUDGET_LOW/MEDIUM/HIGH`: 2,000 / 8,000 / 15,000) |
-| Sonnet 4.6, Opus 4.8, Sonnet 5, Opus 5 | Adaptive thinking (the model decides depth; token budgets are rejected by these models) |
+| Sonnet 4.6, Opus 4.8, Sonnet 5, Sonnet 5.5, Opus 5 | Adaptive thinking (the model decides depth; token budgets are rejected by these models) |
 | Fable 5 | None (thinking is always on and cannot be configured) |
 
 > Note: Anthropic thinking budgets are separate from output tokens. OpenAI reasoning effort consumes output tokens, which can cause truncation at high levels.

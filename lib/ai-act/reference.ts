@@ -9,7 +9,8 @@
  * REFERENCE_REVIEWED_ON) rather than relying on the model's memory.
  */
 
-export const REFERENCE_REVIEWED_ON = "2026-10-07";
+// The review date lives in ./meta so client code can import it without this file's content.
+export { REFERENCE_REVIEWED_ON } from "./meta";
 
 const EURLEX =
   "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689";
@@ -72,7 +73,9 @@ The original provider must then cooperate and provide the necessary information 
     content: `
 Article 4 requires providers and deployers of ANY AI system — whatever its risk level — to take measures to ensure, to their best extent, a sufficient level of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf, taking into account their technical knowledge, experience, education and training, the context of use, and the persons on whom the systems are used. It has applied since 2 February 2025.
 
-Practical evidence: an AI literacy policy, role-based training (product, engineering, customer support, HR users), records of training completion, and usage guidance for each AI tool. The Commission has published AI literacy Q&A material and a repository of practices; the Commission's 2025 "Digital Omnibus" proposal would soften this into an obligation on Member States and the Commission to encourage literacy — check whether that change has been adopted before relying on it.
+Practical evidence: an AI literacy policy, role-based training (product, engineering, customer support, HR users), records of training completion, and usage guidance for each AI tool. The Commission has published AI literacy Q&A material and a repository of practices.
+
+UNVERIFIED POINT: the Commission's Digital Omnibus on AI proposal would have replaced the company-level duty with a duty on the Commission and Member States to promote and encourage AI literacy. The Omnibus is now in force (Regulation (EU) 2026/1744), but the sources reviewed did not confirm what the final text does with Article 4. Check the current wording of Article 4 on EUR-Lex before telling a user the duty has been removed or softened; until then recommend keeping the training and records, which are good practice either way.
 `.trim(),
   },
   {
@@ -91,6 +94,8 @@ The following practices have been prohibited since 2 February 2025 (Article 5(1)
 (g) Biometric categorisation systems that categorise individuals based on biometric data to deduce or infer race, political opinions, trade union membership, religious or philosophical beliefs, sex life or sexual orientation (lawful labelling or filtering of lawfully acquired biometric datasets, e.g. in law enforcement, is excepted).
 (h) Real-time remote biometric identification in publicly accessible spaces for law enforcement, except where strictly necessary for narrowly defined objectives (targeted search for victims of abduction, trafficking or sexual exploitation and missing persons; preventing a specific, substantial and imminent threat to life or a genuine terrorist threat; locating suspects of serious crimes listed in Annex II), subject to prior authorisation and safeguards (Article 5(2)–(7)).
 
+Added by the Digital Omnibus on AI (applies from 2 December 2026): a prohibition on AI systems that generate or manipulate non-consensual intimate imagery or child sexual abuse material (including "nudifier" applications), reaching providers whose systems produce such content as a reasonably foreseeable outcome. A system is not caught where effective technical safeguards reliably prevent such outputs. The exact article wording and the applicable fine tier were not confirmed against the consolidated text; verify before quoting them.
+
 The Commission published guidelines on prohibited AI practices on 4 February 2025, with examples of what is and is not covered. Note: emotion recognition OUTSIDE the workplace and education is not prohibited but is high-risk (Annex III point 1(c)) and triggers Article 50(3) transparency.
 `.trim(),
   },
@@ -102,9 +107,9 @@ The Commission published guidelines on prohibited AI practices on 4 February 202
     content: `
 There are two routes to high-risk status (Article 6):
 
-Route 1 — product safety (Article 6(1), Annex I). An AI system is high-risk where BOTH conditions are met: (a) it is intended to be used as a safety component of a product, or is itself a product, covered by the EU harmonisation legislation listed in Annex I; and (b) that product must undergo a third-party conformity assessment under that legislation. Annex I Section A covers, among others, machinery, toys, recreational craft, lifts, equipment for explosive atmospheres, radio equipment, pressure equipment, cableway installations, personal protective equipment, gas appliances, medical devices and in vitro diagnostic medical devices. Annex I Section B covers civil aviation, motor vehicles and their trailers, two- and three-wheel vehicles, agricultural and forestry vehicles, marine equipment and rail interoperability (for Section B, the requirements are integrated through the sectoral legislation). This route applies from 2 August 2027.
+Route 1 — product safety (Article 6(1), Annex I). An AI system is high-risk where BOTH conditions are met: (a) it is intended to be used as a safety component of a product, or is itself a product, covered by the EU harmonisation legislation listed in Annex I; and (b) that product must undergo a third-party conformity assessment under that legislation. Annex I Section A covers, among others, machinery, toys, recreational craft, lifts, equipment for explosive atmospheres, radio equipment, pressure equipment, cableway installations, personal protective equipment, gas appliances, medical devices and in vitro diagnostic medical devices. Annex I Section B covers civil aviation, motor vehicles and their trailers, two- and three-wheel vehicles, agricultural and forestry vehicles, marine equipment and rail interoperability (for Section B, the requirements are integrated through the sectoral legislation). This route applies from 2 August 2028 (moved from 2 August 2027 by the Digital Omnibus on AI, Regulation (EU) 2026/1744, in force since 27 July 2026).
 
-Route 2 — use cases (Article 6(2), Annex III). AI systems used in the areas listed in Annex III are high-risk (see the Annex III section), subject to the narrow exception in Article 6(3). Applies from 2 August 2026 under the original timeline.
+Route 2 — use cases (Article 6(2), Annex III). AI systems used in the areas listed in Annex III are high-risk (see the Annex III section), subject to the narrow exception in Article 6(3). Applies from 2 December 2027 (moved from 2 August 2026 by the Digital Omnibus on AI). The high-risk classification rules themselves are unchanged.
 
 The Commission must provide guidelines with a comprehensive list of practical examples of high-risk and non-high-risk use cases (Article 6(5)); check for the latest version. The Commission may amend Annex III by delegated act (Article 7).
 `.trim(),
@@ -143,7 +148,7 @@ An Annex III system is NOT high-risk if it does not pose a significant risk of h
 
 Override: an Annex III AI system is ALWAYS high-risk where it performs profiling of natural persons (profiling as defined in GDPR Article 4(4)). Ranking or scoring candidates, borrowers or students is generally profiling.
 
-Conditions for relying on the exception: the provider must document its assessment before placing the system on the market (Article 6(4)), provide that documentation to national authorities on request, and still register the system in the EU database (Article 49(2)). Relying on the exception wrongly exposes the provider to penalties, so it should be a documented, reviewed decision — not a default.
+Conditions for relying on the exception: the provider must document its assessment before placing the system on the market (Article 6(4)), provide that documentation to national authorities on request, and still register the system in the EU database (Article 49(2)). The Digital Omnibus on AI kept this registration duty (the Commission had proposed removing it) but simplified the information to be submitted. Relying on the exception wrongly exposes the provider to penalties, so it should be a documented, reviewed decision — not a default.
 `.trim(),
   },
   {
@@ -154,7 +159,7 @@ Conditions for relying on the exception: the provider must document its assessme
     content: `
 High-risk AI systems must comply with the following requirements, taking into account their intended purpose and the state of the art (Article 8):
 - Risk management system (Article 9): a continuous, iterative process across the entire lifecycle — identify and analyse known and reasonably foreseeable risks to health, safety and fundamental rights, estimate risks under intended use and reasonably foreseeable misuse, adopt targeted mitigation measures, and test the system (including, where appropriate, in real-world conditions). Pay specific attention to impacts on persons under 18 and other vulnerable groups.
-- Data and data governance (Article 10): training, validation and testing data must be subject to governance practices covering design choices, collection processes and data origin, preparation (annotation, labelling, cleaning), assumptions, availability and suitability, examination for possible biases likely to affect health, safety or fundamental rights or lead to discrimination, and measures to detect, prevent and mitigate them, and identification of data gaps. Data sets must be relevant, sufficiently representative and, to the best extent possible, free of errors and complete. Special categories of personal data may be processed exceptionally and with safeguards, strictly for bias detection and correction (Article 10(5)).
+- Data and data governance (Article 10): training, validation and testing data must be subject to governance practices covering design choices, collection processes and data origin, preparation (annotation, labelling, cleaning), assumptions, availability and suitability, examination for possible biases likely to affect health, safety or fundamental rights or lead to discrimination, and measures to detect, prevent and mitigate them, and identification of data gaps. Data sets must be relevant, sufficiently representative and, to the best extent possible, free of errors and complete. Special categories of personal data may be processed exceptionally and with safeguards, strictly for bias detection and correction (Article 10(5)); the Digital Omnibus on AI widened this legal basis beyond high-risk systems to providers and deployers of other AI systems and models, while keeping the "strict necessity" test.
 - Technical documentation (Article 11, Annex IV): drawn up before placing on the market and kept up to date; it must cover the general description, design and development process, data, monitoring and control, performance metrics, risk management, changes over the lifecycle, standards applied, the EU declaration of conformity and the post-market monitoring plan. SMEs and start-ups may use a simplified form to be provided by the Commission.
 - Record-keeping (Article 12): the system must technically allow automatic recording of events (logs) over its lifetime, to enable traceability, identification of risk situations and substantial modifications, and post-market monitoring.
 - Transparency and information to deployers (Article 13): designed so deployers can interpret output and use it appropriately; accompanied by instructions for use including the provider's identity, characteristics, capabilities and limitations, intended purpose, level of accuracy, robustness and cybersecurity, known risks, human oversight measures, computational and hardware resources, expected lifetime and log-collection mechanisms.
@@ -215,7 +220,7 @@ Right to explanation (Article 86): a person subject to a decision taken by a dep
     provisions: "Article 50",
     url: art(50),
     content: `
-Article 50 applies regardless of whether the system is high-risk, and applies from 2 August 2026:
+Article 50 applies regardless of whether the system is high-risk, and has applied since 2 August 2026. The Digital Omnibus on AI did not amend the Article 50 duties; its only relief is a grace period for the machine-readable marking in paragraph (2): generative systems already placed on the market before 2 August 2026 have until 2 December 2026, while systems placed on the market from 2 August 2026 had to comply from the start.
 (1) Providers must ensure AI systems intended to interact directly with natural persons (e.g. chatbots, voice assistants) are designed so that the persons are informed they are interacting with an AI system, unless obvious to a reasonably well-informed, observant and circumspect person from the circumstances and context.
 (2) Providers of AI systems, including general-purpose AI systems, that generate synthetic audio, image, video or text content must ensure outputs are marked in a machine-readable format and detectable as artificially generated or manipulated. Solutions must be effective, interoperable, robust and reliable as far as technically feasible (e.g. watermarks, metadata, cryptographic provenance, fingerprints). Systems performing an assistive function for standard editing, or not substantially altering the input data, are excepted.
 (3) Deployers of emotion recognition or biometric categorisation systems must inform the natural persons exposed to them about the operation of the system and process personal data in line with GDPR.
@@ -245,6 +250,8 @@ Systemic risk (Article 51): a GPAI model has systemic risk if it has high-impact
 Codes of practice (Article 56): the General-Purpose AI Code of Practice (transparency, copyright, and safety & security chapters) was published on 10 July 2025; signing it is a voluntary way to demonstrate compliance. The Commission also published GPAI guidelines in July 2025.
 
 Transition: GPAI models placed on the market before 2 August 2025 must comply by 2 August 2027 (Article 111(3)). The Commission's enforcement powers, including fines on GPAI providers (Article 101), apply from 2 August 2026.
+
+Supervision (Digital Omnibus on AI): the AI Office has exclusive supervisory authority over AI systems built on a GPAI model where the model and the system come from the same provider, and over AI systems integrated into very large online platforms and search engines under the Digital Services Act. Its powers include investigations, requests for information, inspections, binding commitments and periodic penalty payments of up to 5% of average daily turnover.
 `.trim(),
   },
   {
@@ -268,15 +275,22 @@ An initial incomplete report may be followed by a complete one. The provider mus
     provisions: "Articles 111 and 113",
     url: art(113),
     content: `
-The Regulation entered into force on 1 August 2024 and applies in phases (Article 113), under the timeline as adopted:
-- 2 February 2025: general provisions including AI literacy (Article 4) and prohibited practices (Article 5).
+The Regulation entered into force on 1 August 2024 and applies in phases (Article 113). The phases were amended by the Digital Omnibus on AI — Regulation (EU) 2026/1744 — adopted by the Parliament (16 June 2026) and the Council (29 June 2026), signed on 8 July 2026, published in the Official Journal on 24 July 2026 and in force since 27 July 2026. It is law, not a proposal. The dates that now apply:
+- 2 February 2025: general provisions including AI literacy (Article 4, see the AI literacy section for an unverified point) and prohibited practices (Article 5).
 - 2 August 2025: notifying authorities and notified bodies, GPAI model obligations (Chapter V), governance (AI Office, AI Board), confidentiality, and penalties (except Article 101 GPAI fines). Member States had to designate national competent authorities.
-- 2 August 2026: the rest of the Regulation, including Annex III high-risk obligations (Articles 6(2), 8–27, 43, 47–49), transparency obligations (Article 50), Commission enforcement against GPAI providers including fines, post-market monitoring and incident reporting, and the requirement for each Member State to have at least one AI regulatory sandbox.
-- 2 August 2027: high-risk obligations for AI systems that are safety components or products under Annex I (Article 6(1)); deadline for GPAI models placed on the market before 2 August 2025.
+- 2 August 2026: transparency obligations (Article 50) apply, unchanged except for the marking grace period below; Commission enforcement against GPAI providers, including fines (Article 101), applies.
+- 2 December 2026: the new Article 5 prohibition on generating non-consensual intimate imagery and child sexual abuse material applies; the grace period for the Article 50(2) machine-readable marking of generative systems already on the market before 2 August 2026 ends.
+- 2 August 2027: each Member State must have at least one AI regulatory sandbox (moved from 2 August 2026); deadline for GPAI models placed on the market before 2 August 2025.
+- 2 December 2027: stand-alone high-risk systems under Annex III (Articles 6(2), 8–27, 43, 47–49 and the connected provider duties). Moved from 2 August 2026. The sources reviewed say the Annex III date is a fixed date, not tied to the availability of harmonised standards.
+- 2 August 2028: high-risk AI systems that are safety components or products under Annex I (Article 6(1)). Moved from 2 August 2027.
 
-Legacy systems (Article 111(2)): high-risk AI systems placed on the market or put into service before 2 August 2026 are only subject to the Act if they undergo significant changes in design after that date; however, providers and deployers of high-risk systems intended to be used by public authorities must comply by 2 August 2030. AI systems that are components of the large-scale EU IT systems in Annex X must comply by 31 December 2030.
+Practical reading: as of the date of this review, Article 50 transparency duties, the GPAI rules, the Article 5 prohibitions and the AI literacy provision are the obligations that already apply; high-risk (Annex III) obligations are NOT yet applicable and start on 2 December 2027, but providers should still plan now because conformity assessment, documentation and quality management take a long lead time.
 
-PENDING CHANGE — the "Digital Omnibus on AI": on 19 November 2025 the Commission proposed amending the AI Act, including linking the start of high-risk obligations to the availability of harmonised standards and support tools, with long-stop dates of 2 December 2027 for Annex III systems and 2 August 2028 for Annex I systems, plus simplifications for SMEs and small mid-caps. A proposal is not law until adopted by the European Parliament and the Council and published in the Official Journal. ALWAYS check the current status before telling a user that a deadline has moved, and present both the adopted dates and any confirmed changes.
+Legacy systems (Article 111(2)): as originally adopted, high-risk AI systems placed on the market or put into service before 2 August 2026 are only subject to the Act if they undergo significant changes in design after that date; providers and deployers of high-risk systems intended to be used by public authorities must comply by 2 August 2030; components of the large-scale EU IT systems in Annex X by 31 December 2030. UNVERIFIED: the sources reviewed did not state whether the Omnibus changed the cut-off date in Article 111(2) to follow the new application dates. Check the consolidated text before telling a user that a system placed on the market in the gap between 2 August 2026 and 2 December 2027 is or is not grandfathered.
+
+Other Omnibus changes are noted in the relevant sections: prohibited practices (new ban), Article 50 (marking grace period), Article 6(3) (registration kept but simplified), Article 10 (special-category data for bias), GPAI models (AI Office supervision), innovation support (sandboxes, small mid-caps). Penalty tiers (Article 99) were not changed.
+
+Further amendments and Commission guidance can still follow (for example the high-risk guidelines under Article 6(5), harmonised standards and implementing templates). Check the current status of those before relying on them.
 `.trim(),
   },
   {
@@ -304,9 +318,9 @@ Enforcement is mainly by national market surveillance authorities; the AI Office
     provisions: "Articles 57–63",
     url: art(57),
     content: `
-- AI regulatory sandboxes (Articles 57–59): each Member State must have at least one operational AI regulatory sandbox by 2 August 2026 — a controlled environment to develop, train, test and validate innovative AI systems under regulatory supervision for a limited time. Participants remain liable for harm caused, but no administrative fines are imposed where they follow the sandbox plan and guidance in good faith. Exit reports can be used to demonstrate compliance.
+- AI regulatory sandboxes (Articles 57–59): each Member State must have at least one operational AI regulatory sandbox by 2 August 2027 (moved from 2 August 2026 by the Digital Omnibus on AI) — a controlled environment to develop, train, test and validate innovative AI systems under regulatory supervision for a limited time. Participants remain liable for harm caused, but no administrative fines are imposed where they follow the sandbox plan and guidance in good faith. Exit reports can be used to demonstrate compliance.
 - Testing in real-world conditions (Articles 60–61): providers of Annex III high-risk systems may test outside sandboxes under a registered real-world testing plan, with informed consent of participants (with exceptions for law enforcement), a maximum duration of six months (extendable by six months), and oversight safeguards.
-- SMEs and start-ups (Article 62): priority, free-of-charge access to sandboxes, tailored awareness and training activities, dedicated communication channels, and fees for conformity assessment reduced in proportion to their size. Microenterprises may comply with certain quality management system elements in a simplified manner (Article 63).
+- SMEs and start-ups (Article 62): priority, free-of-charge access to sandboxes, tailored awareness and training activities, dedicated communication channels, and fees for conformity assessment reduced in proportion to their size. Microenterprises may comply with certain quality management system elements in a simplified manner (Article 63). The Digital Omnibus on AI extends the SME simplifications and support measures, including priority sandbox access, to small mid-caps; check the final text for the exact list of measures and the size definition before telling a user they qualify.
 `.trim(),
   },
 ] as const satisfies readonly ReferenceSection[];

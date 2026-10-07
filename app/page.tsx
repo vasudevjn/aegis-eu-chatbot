@@ -27,6 +27,8 @@ import { AI_NAME, AI_TAGLINE, STARTER_PROMPTS, CLEAR_CHAT_TEXT, OWNER_NAME, WELC
 import Image from "next/image";
 import Link from "next/link";
 import { ConversationSidebar } from "@/components/conversation-sidebar";
+import { buildExportMarkdown, downloadMarkdown } from "@/lib/export";
+import { REFERENCE_REVIEWED_ON } from "@/lib/ai-act/meta";
 import {
   createConversation,
   loadConversationData,
@@ -235,24 +237,20 @@ export default function Chat() {
       return;
     }
 
-    const markdown = messages
-      .map((msg) => {
-        const role = msg.role === "user" ? "You" : AI_NAME;
-        const text = msg.parts
-          .filter((p) => p.type === "text")
-          .map((p: any) => p.text)
-          .join("\n");
-        return `### ${role}\n\n${text}`;
-      })
-      .join("\n\n---\n\n");
+    const markdown = buildExportMarkdown(messages, {
+      aiName: AI_NAME,
+      referenceReviewedOn: REFERENCE_REVIEWED_ON,
+      roleLabels: true,
+    });
+    if (!markdown) {
+      toast.error("No messages to export");
+      return;
+    }
 
-    const blob = new Blob([markdown], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${AI_NAME}-chat-${new Date().toISOString().slice(0, 10)}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadMarkdown(
+      `${AI_NAME}-chat-${new Date().toISOString().slice(0, 10)}.md`,
+      markdown
+    );
     toast.success("Chat exported");
   }
 

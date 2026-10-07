@@ -46,9 +46,9 @@ based on the feature switches (`ENABLE_VECTOR_SEARCH`, `ENABLE_WEB_SEARCH`), whi
 
 | Tool | File | Description |
 |------|------|-------------|
-| `vectorDatabaseSearch` | `search-vector-database.ts` | Pinecone RAG search |
+| `vectorDatabaseSearch` | `search-vector-database.ts` | Pinecone RAG search: the PRIMARY source; returns explicit "no match" / "unavailable" results so the model falls back to `aiActReference` and labels it |
 | `aiActReference` | `ai-act-reference.ts` | Built-in EU AI Act reference (always on, no key) |
-| `webSearch` | `web-search.ts` | Exa web search for regulatory updates (on when `EXA_API_KEY` is set) |
+| `webSearch` | `web-search.ts` | Exa web search for regulatory updates (OFF by default; opt in with `ENABLE_WEB_SEARCH=true` plus `EXA_API_KEY`) |
 
 UI display for tools is in `components/messages/tool-call.tsx`.
 

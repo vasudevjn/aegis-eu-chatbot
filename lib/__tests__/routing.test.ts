@@ -64,14 +64,19 @@ describe("routeRequest", () => {
 });
 
 describe("buildProviderOptions", () => {
+  it("uses adaptive thinking (no token budget) for the default Sonnet model", () => {
+    const opts = buildProviderOptions("anthropic", "chat", "medium");
+    expect(opts.anthropic?.thinking).toEqual({ type: "adaptive" });
+  });
+
   it("enables thinking for anthropic reasoning mode", () => {
-    const opts = buildProviderOptions("anthropic", "reasoning", "high");
+    const opts = buildProviderOptions("anthropic", "reasoning", "high", "claude-haiku-4-5");
     expect(opts.anthropic?.thinking.type).toBe("enabled");
     expect(opts.anthropic?.thinking.budgetTokens).toBe(15000);
   });
 
   it("enables low thinking budget for anthropic chat mode", () => {
-    const opts = buildProviderOptions("anthropic", "chat", "medium");
+    const opts = buildProviderOptions("anthropic", "chat", "medium", "claude-haiku-4-5");
     expect(opts.anthropic?.thinking.type).toBe("enabled");
     expect(opts.anthropic?.thinking.budgetTokens).toBe(2000);
   });

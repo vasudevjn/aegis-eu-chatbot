@@ -68,11 +68,20 @@ export const STARTER_PROMPTS = [
 ] as const;
 export const CLEAR_CHAT_TEXT = "New";
 
+// --- Terms of Use (app/terms/page.tsx) ---
+// Operator-specific details the Terms cannot invent. Fill these in before
+// public launch; empty values simply omit the matching clause.
+export const TERMS_LAST_UPDATED = "7 October 2026"; // bump whenever the Terms change
+export const TERMS_CONTACT_EMAIL = ""; // where users reach the operator (privacy requests, questions)
+export const TERMS_GOVERNING_LAW = ""; // e.g. "the laws of India"; empty = no governing-law / forum clause
+
 // --- Defaults (PROF REQUIREMENT: Anthropic by default) ---
 export const DEFAULT_VENDOR = "anthropic" as const;
 
-// Use Claude Haiku 4.5 (cost-efficient, thinking budget separate from output)
-export const DEFAULT_MODEL_ID = "claude-haiku-4-5" as const;
+// Claude Sonnet 5.5: stronger legal reasoning than Haiku for classification and obligation
+// mapping. Uses adaptive thinking (see anthropicThinkingOptions), so the thinking budgets
+// below do not apply to it. Background tasks stay on the cheaper UTILITY_MODEL_ID.
+export const DEFAULT_MODEL_ID = "claude-sonnet-5-5" as const;
 
 export const DEFAULT_MODE = "chat" as const; // "chat" | "reasoning"
 
@@ -134,15 +143,14 @@ export const PINECONE_VISUAL_TOP_K = 20; // topK for the visual-enrichment query
 export const PINECONE_VISUALS_PER_SOURCE = 20; // max figure/table chunks merged into context per retrieved source (keep >= PINECONE_VISUAL_TOP_K so late-document figures are not cut)
 
 // --- Knowledge Base Scope (tells the model what topics are indexed) ---
-// Describes the OPTIONAL Pinecone document library. Update this list whenever
-// you ingest new content (see README "Building the document library").
+// Describes the Pinecone document library, Aegis's PRIMARY source. It is inserted
+// into the model's instructions, so it must match what is actually ingested: update
+// this list whenever you ingest or remove content (see README "Building the document library").
 export const KB_SCOPE = `
-The document library holds the official texts behind the EU AI Act:
-- Regulation (EU) 2024/1689 (the AI Act): recitals, articles and annexes, verbatim
-- European Commission guidelines (AI system definition, prohibited practices, general-purpose AI models)
-- The General-Purpose AI Code of Practice and AI Office templates
+The document library holds the text of Regulation (EU) 2024/1689 (the AI Act): recitals, articles and annexes.
+It is the text as originally adopted and does NOT reflect later amendments such as the Digital Omnibus on AI (Regulation (EU) 2026/1744). For dates, applicability and amendments, the built-in reference governs where the two differ.
 
-Any question about the EU AI Act, AI governance or AI compliance is within scope.
+Any question about the EU AI Act is within scope.
 `.trim();
 
 // --- Exa Web Search ---
@@ -251,13 +259,15 @@ export const REASONING_DISPLAY_MODE: ReasoningDisplayMode = "truncated";
 export const REASONING_TRUNCATE_WORDS = 15; // words to show in "truncated" mode
 
 // --- Backend toggles ---
-// Each optional service switches on automatically when its API key is set and
-// can be forced off with its env var. The built-in EU AI Act reference
-// (aiActReference tool) needs no key and is always on.
+// The Pinecone document library switches on automatically when its API key is set
+// (force off with its env var). Web search is opt-in only (see below). The built-in
+// EU AI Act reference (aiActReference tool) needs no key and is always on.
 
-// Web search (Exa): on when EXA_API_KEY is set. Force off with ENABLE_WEB_SEARCH=false
+// Web search (Exa): OFF by default. Aegis answers from the Pinecone document library
+// and the built-in reference only. To opt in, set ENABLE_WEB_SEARCH=true AND EXA_API_KEY;
+// a key on its own does not switch it on.
 export const ENABLE_WEB_SEARCH =
-  process.env.ENABLE_WEB_SEARCH?.toLowerCase() !== "false" &&
+  process.env.ENABLE_WEB_SEARCH?.toLowerCase() === "true" &&
   !!process.env.EXA_API_KEY;
 
 // Pinecone document library: on when PINECONE_API_KEY is set. Force off with

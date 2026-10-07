@@ -23,8 +23,9 @@ export function createAiActReference(
 ) {
   return tool({
     description:
-      "Look up the text-level reference for the EU AI Act (Regulation (EU) 2024/1689). " +
-      "Call it before classifying a system, mapping obligations, stating dates or penalties. " +
+      "Aegis's built-in, curated summary of the EU AI Act (Regulation (EU) 2024/1689), kept up to date with amendments. " +
+      "Call it AFTER the document library when classifying a system, mapping obligations, or stating dates, applicability, amendments or penalties, " +
+      "and use it as the fallback when the library has nothing relevant or is unavailable. " +
       "Request every section you need in ONE call. Available sections:\n" +
       SECTION_MENU,
     inputSchema: z.object({
@@ -46,7 +47,8 @@ export function createAiActReference(
             kind: "kb",
             title: `EU AI Act, ${s.provisions}: ${s.title}`,
             url: s.url,
-            site: "EUR-Lex: Regulation (EU) 2024/1689",
+            // A summary, not the verbatim text: label it so the Sources box does not read as a quotation from EUR-Lex.
+            site: "Aegis built-in summary (links to EUR-Lex)",
           },
           `${s.title}\n${s.content}`
         );
