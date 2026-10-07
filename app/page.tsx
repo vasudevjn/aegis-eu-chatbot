@@ -16,7 +16,6 @@ import {
   FileText,
   PanelLeft,
   Plus,
-  Presentation,
   Square,
 } from "lucide-react";
 import { ThinkingIndicator } from "@/components/ai-elements/thinking-indicator";
@@ -57,7 +56,6 @@ export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showContextMemory, setShowContextMemory] = useState(false);
   const welcomeMessageShownRef = useRef<boolean>(false);
-  const demoPromptSentRef = useRef<boolean>(false);
 
   // Compaction state: stored summary persists across requests
   const summaryRef = useRef<{ summary: string; summarizedUpTo: number; signature: string } | null>(null);
@@ -160,20 +158,6 @@ export default function Chat() {
         durations: {},
       });
       welcomeMessageShownRef.current = true;
-    }
-
-    // Demo deep link (used by the /present deck): /?q=<prompt> opens a fresh
-    // chat and sends the prompt once. The param is stripped so a reload does
-    // not resend it.
-    const q = new URLSearchParams(window.location.search).get("q")?.trim();
-    if (q && !demoPromptSentRef.current) {
-      demoPromptSentRef.current = true;
-      window.history.replaceState(null, "", window.location.pathname);
-      const conv = createConversation();
-      setActiveConvId(conv.id);
-      setDurations({});
-      setMessages([]);
-      sendMessage({ text: q.slice(0, MAX_MESSAGE_TEXT_LENGTH) });
     }
   }, []);
 
@@ -383,11 +367,6 @@ export default function Chat() {
                   </div>
                 );
               })()}
-              <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                <Link href="/present" aria-label="Presentation" title="Presentation">
-                  <Presentation className="size-4" />
-                </Link>
-              </Button>
               <Button
                 variant="ghost"
                 size="icon"
