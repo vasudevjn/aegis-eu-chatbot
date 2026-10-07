@@ -330,7 +330,10 @@ export default function Chat() {
             </ChatHeaderBlock>
             <ChatHeaderBlock className="justify-center items-center">
               <div className="flex flex-col items-center leading-tight text-center">
-                <span className="text-sm font-semibold">{AI_NAME}</span>
+                <span className="flex items-center gap-1.5 text-sm font-semibold">
+                  <Image src="/logo.png" alt="" width={22} height={22} priority />
+                  {AI_NAME}
+                </span>
                 <span className="hidden sm:block text-[11px] text-muted-foreground">{AI_TAGLINE}</span>
               </div>
             </ChatHeaderBlock>
