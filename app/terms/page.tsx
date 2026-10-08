@@ -104,8 +104,10 @@ export default function Terms() {
                         The AI Act is being implemented in phases and has already been amended.
                         {" "}{AI_NAME}’s built-in legal reference was last reviewed on{" "}
                         {REFERENCE_REVIEWED_ON}. Later amendments, guidance and national rules may
-                        not be reflected. Where a point is marked as unverified, or a deadline
-                        matters to your plans, confirm it with an official source.
+                        not be reflected. Where a deadline matters to your plans, confirm it
+                        with an official source. Assessments are produced by fixed rules applied
+                        to the facts you give, so an incorrect or missing fact can change the
+                        result.
                     </p>
                     <p>
                         The AI Act is only part of the picture. Your system may also be subject to

@@ -33,6 +33,12 @@ export const FUN_LABELS = {
     "Accessing",
     "Fetching ",
   ],
+  rulesEngine: [
+    "Applying the rules",
+    "Classifying the system",
+    "Mapping duties and dates",
+    "Checking the Act article by article",
+  ],
   legalReference: [
     "Checking the AI Act",
     "Reading the articles",
@@ -117,6 +123,12 @@ export const PAST_TENSE: Record<FunLabelCategory, string[]> = {
     "Fetched documents",
     "Searched memory",
     "Retrieved insights",
+  ],
+  rulesEngine: [
+    "Applied the rules",
+    "Classified the system",
+    "Mapped duties and dates",
+    "Checked the Act article by article",
   ],
   legalReference: [
     "Checked the AI Act",

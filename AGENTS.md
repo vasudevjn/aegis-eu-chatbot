@@ -1,6 +1,6 @@
 # Aegis (EU AI Act Compliance Copilot) — Agent Guide
 
-Built on the myAI6 template. Domain knowledge lives in `lib/ai-act/reference.ts` (curated, article-level summaries of Regulation (EU) 2024/1689 with EUR-Lex links) and the assessment workflow in `prompts.ts` (`WORKFLOW_PROMPT`). When the law, guidance or implementation dates change, update the reference and bump `REFERENCE_REVIEWED_ON`.
+Built on the myAI6 template. Domain knowledge lives in `lib/ai-act/reference.ts` (curated, article-level summaries of Regulation (EU) 2024/1689 with EUR-Lex links) and the assessment decisions in the rules engine `lib/rules/` (tier, role, duties, dates and fines are decided by code, not by the model; `prompts.ts` `WORKFLOW_PROMPT` only tells the model to extract facts and explain). When the law, guidance or implementation dates change, update the rule pack (see `lib/rules/README.md`) and the reference, and bump `RULE_PACK_VERSION` and `REFERENCE_REVIEWED_ON`.
 
 ## Configuration Model
 
@@ -41,6 +41,8 @@ Configuration is split into two places:
 | `lib/ai/routing.ts` | Vendor/model/mode routing |
 | `lib/ai/model-registry.ts` | Supported models and thinking budgets |
 | `lib/ai/tools.ts` | Tool set assembly (respects the feature switches) |
+| `lib/rules/` | The rules engine: deterministic classification, roles, duties, dates, fines, confidence, gap check, action plan, what-if (see `lib/rules/README.md`) |
+| `components/messages/assessment-view.tsx` | The assessment card rendered from the engine's output |
 
 ## Tools
 
@@ -50,6 +52,7 @@ based on the feature switches (`ENABLE_VECTOR_SEARCH`, `ENABLE_WEB_SEARCH`), whi
 | Tool | File | Description |
 |------|------|-------------|
 | `vectorDatabaseSearch` | `search-vector-database.ts` | Pinecone RAG search: the PRIMARY source; returns explicit "no match" / "unavailable" results so the model falls back to `aiActReference` and labels it |
+| `assessSystem` | `assess-system.ts` | The rules engine (always on, no key): the model passes extracted facts, the engine decides; full result goes to the UI, a compact digest to the model |
 | `aiActReference` | `ai-act-reference.ts` | Built-in EU AI Act reference (always on, no key) |
 | `webSearch` | `web-search.ts` | Exa web search for regulatory updates (OFF by default; opt in with `ENABLE_WEB_SEARCH=true` plus `EXA_API_KEY`) |
 

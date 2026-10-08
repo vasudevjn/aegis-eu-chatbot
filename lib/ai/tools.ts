@@ -2,6 +2,7 @@ import { type ToolSet } from "ai";
 import { createWebSearch } from "@/app/api/chat/tools/web-search";
 import { createVectorDatabaseSearch } from "@/app/api/chat/tools/search-vector-database";
 import { createAiActReference } from "@/app/api/chat/tools/ai-act-reference";
+import { createAssessSystem } from "@/app/api/chat/tools/assess-system";
 import {
   ENABLE_WEB_SEARCH,
   ENABLE_VECTOR_SEARCH,
@@ -27,6 +28,7 @@ export type CollectSource = (s: UISource, content?: string) => void;
  */
 export function buildToolSet(collect: CollectSource = () => {}): ToolSet {
   return {
+    assessSystem: createAssessSystem(collect),
     aiActReference: createAiActReference(collect),
     ...(ENABLE_VECTOR_SEARCH ? { vectorDatabaseSearch: createVectorDatabaseSearch(collect) } : {}),
     ...(ENABLE_WEB_SEARCH ? { webSearch: createWebSearch(collect) } : {}),
@@ -37,6 +39,10 @@ export function buildToolGuidance(): string {
   const sections: string[] = [];
 
   sections.push("TOOL BUDGET (limits per response):");
+
+  sections.push(
+    `- assessSystem: the RULES ENGINE. Call it (once per response) whenever the user describes a system, changes a fact, answers an open question or gap-check question, or asks a what-if. It alone decides tier, roles, duties, dates and fines; never contradict or re-derive its output. Pass every fact known so far, only those the user stated or that clearly follow (omit anything unsure). Do not call vectorDatabaseSearch or aiActReference just to classify; use them to explain a provision the user asks about. The user sees the full result as a card, so reply in 2 to 4 short sentences and do not repeat its lists.`
+  );
 
   if (ENABLE_VECTOR_SEARCH) {
     sections.push(
@@ -53,7 +59,7 @@ export function buildToolGuidance(): string {
 
   if (ENABLE_WEB_SEARCH) {
     sections.push(
-      `- webSearch: MAX ${MAX_WEB_SEARCHES} calls. Use it ONLY for currency checks: the final text of the Digital Omnibus (Regulation (EU) 2026/1744) where the reference flags a point as unverified, any later amendment, newly published Commission guidelines, codes of practice, harmonised standards, templates, or national enforcement news, or when the user asks "what's new" / "latest". Prefer one call with 2-3 additionalQueries. For legal status, restrict to official domains with includeDomains (e.g. ${OFFICIAL_SOURCE_DOMAINS.join(", ")}).`
+      `- webSearch: MAX ${MAX_WEB_SEARCHES} calls. Use it ONLY for currency checks: any amendment later than the Digital Omnibus (Regulation (EU) 2026/1744), newly published Commission guidelines, codes of practice, harmonised standards, templates, or national enforcement news, or when the user asks "what's new" / "latest". Prefer one call with 2-3 additionalQueries. For legal status, restrict to official domains with includeDomains (e.g. ${OFFICIAL_SOURCE_DOMAINS.join(", ")}).`
     );
   } else {
     sections.push(

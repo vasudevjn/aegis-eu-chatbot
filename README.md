@@ -17,7 +17,7 @@ Aegis then runs a structured assessment:
 | ✅ Compliance check | Targeted questions on existing controls, marked ✅ / ⚠️ / ❌. |
 | 🛠️ Recommend actions | Prioritised P0 / P1 / P2 action plan, each step tied to an article and the evidence it produces. |
 | 📄 Generate evidence | Draft artefacts: risk checklists, Annex IV documentation outlines, AI governance registers, FRIA outlines, disclosure text, incident runbooks, questions for legal and security. Exportable as Markdown. |
-| 🔄 Stay current | Date-aware phased timeline (Art. 113), reflects the Digital Omnibus on AI (Regulation (EU) 2026/1744, in force 27 July 2026) and flags points still to be verified, and (with web search on) checks official EU sources for the latest guidance. |
+| 🔄 Stay current | Date-aware phased timeline (Art. 113), reflects the Digital Omnibus on AI (Regulation (EU) 2026/1744, in force 27 July 2026) and applies the original and the amended dates side by side, and (with web search on) checks official EU sources for the latest guidance. |
 
 **Who it's for:** product managers, engineering and data teams, legal and compliance teams, and business leaders.
 
@@ -28,6 +28,10 @@ Aegis then runs a structured assessment:
 - **Built-in legal reference** ([`lib/ai-act/reference.ts`](lib/ai-act/reference.ts)): 16 curated, article-level sections of Regulation (EU) 2024/1689 (scope, roles, AI literacy, prohibited practices, high-risk classification, Annex III, the Art. 6(3) exception, Arts. 8–15 requirements, provider and deployer duties, FRIA, Art. 50 transparency, GPAI, incident reporting, timeline, penalties, sandboxes). Each section links to the official EUR-Lex text. It is served by the `aiActReference` tool, needs no external service, and every answer cites it inline with a Sources box.
 - **Web search (off by default):** Exa, steered to official EU domains. Opt in with `ENABLE_WEB_SEARCH=true` plus `EXA_API_KEY`; a key alone does not turn it on.
 - **Document library (primary source):** the template's Pinecone RAG pipeline (`RAGloader/`) ingests the Act text into the `aegis-eu-ai-act` index. Aegis searches it first on every substantive question; when it finds nothing or is unavailable, Aegis falls back to the built-in reference and says so. It switches on automatically once `PINECONE_API_KEY` is set.
+
+## The rules engine
+
+Describing a system to Aegis does not ask the language model to classify it. The model only reads what you wrote and extracts facts; a deterministic rules engine ([`lib/rules/`](lib/rules/README.md)) decides the risk tier, your role, the duties with their dates, fine exposure and confidence, and cites the article behind each step. The chat shows its result as an assessment card (reasons, duties by owner, open questions, a gap-check form, an action plan, what-if comparison) and the Markdown export includes it. Same facts and date always give the same result, and `npm test` runs about 100 rule and golden-case tests. See [`lib/rules/README.md`](lib/rules/README.md) for the design and how to update the rules when the law changes.
 
 ## One deployment: presentation at `/`, chatbot at `/chat`
 
@@ -57,7 +61,7 @@ Local: `cp env.template .env.local`, add your key, then `npm install && npm run 
 
 ## Maintaining the legal content
 
-When the law, its guidance or the dates change (e.g. a further amendment, or the final text settles a point the reference marks as unverified), edit the relevant section in `lib/ai-act/reference.ts` and update `REFERENCE_REVIEWED_ON`. The assessment workflow and output format live in `WORKFLOW_PROMPT` in [`prompts.ts`](prompts.ts). Branding, welcome text and starter prompts are in [`config.ts`](config.ts).
+When the law, its guidance or the dates change (e.g. a further amendment), edit the rule pack in [`lib/rules/pack/`](lib/rules/README.md) (the rules that decide classification, duties and dates), the matching section in `lib/ai-act/reference.ts` (the prose the chatbot quotes), and update `REFERENCE_REVIEWED_ON` and `RULE_PACK_VERSION`. The assessment workflow and output format live in `WORKFLOW_PROMPT` in [`prompts.ts`](prompts.ts). Branding, welcome text and starter prompts are in [`config.ts`](config.ts).
 
 ---
 

@@ -202,7 +202,8 @@ export async function POST(req: Request) {
   // --- Convert messages ---
   let modelMessages;
   try {
-    modelMessages = await convertToModelMessages(compactionResult.messages);
+    // Passing the tool set lets toModelOutput shrink earlier assessSystem results to their model view.
+    modelMessages = await convertToModelMessages(compactionResult.messages, { tools });
   } catch (error) {
     console.error("convertToModelMessages failed:", error);
     return jsonError(

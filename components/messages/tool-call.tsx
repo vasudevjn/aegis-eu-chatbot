@@ -1,7 +1,7 @@
 "use client";
 
 import { ToolCallPart, ToolResultPart } from "ai";
-import { BookOpen, Globe, Scale, Wrench } from "lucide-react";
+import { BookOpen, Gavel, Globe, Scale, Wrench } from "lucide-react";
 import { Shimmer } from "../ai-elements/shimmer";
 import { useRotatingLabel } from "@/hooks/use-rotating-label";
 import { pickRandomPastTense, type FunLabelCategory } from "@/lib/fun-labels";
@@ -36,7 +36,19 @@ function formatReferenceArgs(_: string, input: unknown): string {
     : "";
 }
 
+function formatAssessArgs(_: string, input: unknown): string {
+  const profile = (input as { profile?: { summary?: unknown } } | null)?.profile;
+  return typeof profile?.summary === "string" ? profile.summary : "";
+}
+
 const TOOL_CONFIG: Record<string, ToolDisplayConfig> = {
+  assessSystem: {
+    callCategory: "rulesEngine",
+    resultCategory: "rulesEngine",
+    call_icon: <Gavel className="w-4 h-4" />,
+    result_icon: <Gavel className="w-4 h-4" />,
+    formatArgs: formatAssessArgs,
+  },
   aiActReference: {
     callCategory: "legalReference",
     resultCategory: "legalReference",

@@ -5,6 +5,8 @@ import { Response } from "@/components/ai-elements/response";
 import { ReasoningPart } from "./reasoning-part";
 import { ToolCall, ToolResult } from "./tool-call";
 import { Sources } from "./sources";
+import { AssessmentView, AssessmentSkeleton } from "./assessment-view";
+import type { Assessment } from "@/lib/rules/assessment";
 import { rewriteCitationsInParts } from "@/lib/citations";
 import type { UISource } from "@/types/data";
 import { AssemblingIndicator } from "../ai-elements/assembling-indicator";
@@ -207,6 +209,16 @@ export function AssistantMessage({
             part.type.startsWith("tool-") ||
             part.type === "dynamic-tool"
           ) {
+            if (part.type === "tool-assessSystem") {
+              // The rules engine's result is shown as the assessment card, not as a one-line tool status.
+              const state = (part as { state?: string }).state;
+              const output = (part as { output?: unknown }).output;
+              if (state === "output-available" && output) {
+                return <AssessmentView key={`${message.id}-${i}`} assessment={output as Assessment} />;
+              }
+              if (state === "output-error") return null;
+              return <AssessmentSkeleton key={`${message.id}-${i}`} />;
+            }
             if ("state" in part && part.state === "output-available") {
               return (
                 <ToolResult

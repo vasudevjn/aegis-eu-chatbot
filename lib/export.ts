@@ -1,6 +1,8 @@
 import type { UIMessage } from "ai";
 import { rewriteCitationsInParts } from "@/lib/citations";
 import { blocksToMarkdown } from "@/lib/aegis-blocks";
+import { assessmentToMarkdown } from "@/lib/rules/markdown";
+import type { Assessment } from "@/lib/rules/assessment";
 import type { UISource } from "@/types/data";
 
 export type ExportOptions = {
@@ -53,7 +55,14 @@ function turnToMarkdown(message: UIMessage, opts: ExportOptions): string | null 
     message.role === "assistant"
       ? rewriteCitationsInParts(textParts(message).map(blocksToMarkdown))
       : textParts(message);
-  const body = texts.map((t) => t.trim()).filter(Boolean).join("\n\n");
+  // The rules engine's result is a card in the chat; in the file it becomes the assessment document.
+  const assessments =
+    message.role === "assistant"
+      ? message.parts
+          .filter((p) => p.type === "tool-assessSystem" && (p as { state?: string }).state === "output-available")
+          .map((p) => assessmentToMarkdown((p as unknown as { output: Assessment }).output))
+      : [];
+  const body = [...assessments, ...texts.map((t) => t.trim())].filter(Boolean).join("\n\n");
   if (!body) return null;
 
   const sources = message.role === "assistant" ? sourcesOf(message) : [];
