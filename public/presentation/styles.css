@@ -186,7 +186,7 @@ h1 em { font-style: normal; color: var(--accent); }
 .risk-panel ul { margin: 0; padding-left: 20px; display: grid; gap: 7px; color: var(--body); }
 .risk-panel li::marker { color: var(--accent); }
 .principle { margin-top: 26px; padding: 20px 24px; border-radius: var(--radius); border: 1px solid var(--text); background: var(--text); }
-.principle p { margin: 0; font-size: clamp(1.05rem, 1.9vw, 1.3rem); color: #fff; line-height: 1.45; }
+.principle p { margin: 0; font-size: clamp(0.85rem, 1.1vw, 0.95rem); color: #fff; line-height: 1.45; }
 .principle strong { color: var(--mint-fill); }
 
 /* ---------- Chatbot tab: the chat fills the stage under the same header and footer ---------- */

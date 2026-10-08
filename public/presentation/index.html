@@ -167,7 +167,7 @@
   <div class="wrap">
     <p class="eyebrow">Responsible by design</p>
     <h1>An AI that checks AI must hold itself to the same standard</h1>
-    <p class="lede">We know where an LLM-based Copilot can fail. Here is how each risk is handled today, and what is still on the roadmap.</p>
+    <p class="lede">Where an LLM-based Copilot can fail, how each risk is handled today, and what comes next.</p>
 
     <div class="legend" aria-hidden="true"><span class="chip live">In place today</span><span class="chip road">On the roadmap</span></div>
 
@@ -188,46 +188,42 @@
           <p class="wrong"><b>What could go wrong</b>The model states an obligation that doesn't exist or misreads an article.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>Answers are grounded first in the document library (the Act's text), backed by a curated, article-level reference with links to EUR-Lex.</li>
-            <li>Every legal statement carries an inline citation, and a Sources box lists what was used.</li>
-            <li>Each classification comes with a confidence level (High, Medium or Low) and the fact that would change the answer.</li>
-            <li>If the sources don't cover something, Aegis says so instead of guessing.</li>
+            <li>Answers are grounded in the Act's text and a curated reference with EUR-Lex links.</li>
+            <li>Every legal statement is cited, with a confidence level.</li>
+            <li>If the sources don't cover a point, Aegis says so.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>Add Commission guidance documents to the library, and sample answers for expert review.</li></ul>
+          <ul><li>Commission guidance in the library, and expert review of sample answers.</li></ul>
         </div>
 
         <div class="risk-panel" role="tabpanel" id="rp-2" aria-labelledby="rt-2" hidden>
           <p class="wrong"><b>What could go wrong</b>A high-risk system is labeled minimal risk, or the reverse.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>A fixed workflow checks in the Act's own order: scope, prohibited practices, high-risk (including the Article 6(3) exception and the profiling override), transparency, then GPAI. Tiers can stack.</li>
-            <li>Results are worded as “likely”. Missing facts become targeted questions.</li>
-            <li>High-stakes or ambiguous cases are sent to qualified counsel, not guessed.</li>
+            <li>A fixed workflow follows the Act's own order of checks, including the Article 6(3) exception.</li>
+            <li>Results say “likely”; missing facts become questions; hard cases go to counsel.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>Rules-based decision logic for the classification itself, with the LLM in a supporting role, tested against labelled reference cases.</li></ul>
+          <ul><li>Rules-based classification logic, tested on labelled reference cases.</li></ul>
         </div>
 
         <div class="risk-panel" role="tabpanel" id="rp-3" aria-labelledby="rt-3" hidden>
           <p class="wrong"><b>What could go wrong</b>Deadlines and guidance change, as the 2026 amendments did.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>The built-in reference carries a review date and has been updated for the Digital Omnibus (Regulation (EU) 2026/1744), which moved the high-risk dates.</li>
-            <li>That date appears in the Terms and on every exported assessment.</li>
-            <li>Aegis compares each deadline with today's date and says whether it already applies.</li>
+            <li>The reference is dated and already reflects the Digital Omnibus (Regulation (EU) 2026/1744).</li>
+            <li>Deadlines are checked against today's date; exports show the review date.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>Automated monitoring for new acts and guidance, a version stamp on each assessment, and a flag for reassessment when the law changes.</li></ul>
+          <ul><li>Automated monitoring for new acts, with reassessment flags.</li></ul>
         </div>
 
         <div class="risk-panel" role="tabpanel" id="rp-4" aria-labelledby="rt-4" hidden>
           <p class="wrong"><b>What could go wrong</b>Teams treat a Copilot result as a legal sign-off.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>Clear positioning: Aegis is a first-line governance partner, not a lawyer or regulator.</li>
-            <li>Classifications use “likely” language, and every full assessment ends with a not-legal-advice line.</li>
-            <li>Serious situations (a possibly prohibited practice, an incident, an authority enquiry) are sent to counsel. The Terms say the same.</li>
+            <li>Positioned as a first-line partner, not a lawyer; every assessment ends with a not-legal-advice line.</li>
+            <li>Serious situations are referred to counsel.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
           <ul><li>A built-in sign-off step for high-risk conclusions.</li></ul>
@@ -237,46 +233,44 @@
           <p class="wrong"><b>What could go wrong</b>Product details shared with the Copilot leak or are used for training.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>No accounts and no server-side conversation storage: chats stay in the user's own browser.</li>
-            <li>No analytics, and Aegis does not use conversations for training or advertising.</li>
-            <li>Users are told not to enter personal or confidential data and to describe systems in general terms. Messages are processed by AI providers under their own terms, and the Terms say so.</li>
+            <li>No accounts, no server-side chat storage, no analytics: chats stay in the user's browser and are not used for training.</li>
+            <li>Users are told not to enter personal or confidential data.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>An EU hosting region, automatic redaction of sensitive data, and encryption and role-based access if accounts are added.</li></ul>
+          <ul><li>EU hosting, automatic redaction, and encryption and access controls if accounts are added.</li></ul>
         </div>
 
         <div class="risk-panel" role="tabpanel" id="rp-6" aria-labelledby="rt-6" hidden>
           <p class="wrong"><b>What could go wrong</b>The same question gets different answers on different days.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>One fixed system prompt, one curated reference, a fixed workflow and a fixed output template for assessments.</li>
-            <li>Automated tests cover the citation logic, the legal reference and the model routing.</li>
+            <li>One fixed prompt, one curated reference and a fixed output format.</li>
+            <li>Automated tests cover citations, the legal reference and routing.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>A regression suite of reference cases, run before every release, so the same system gets the same classification.</li></ul>
+          <ul><li>A regression suite of reference cases, run before every release.</li></ul>
         </div>
 
         <div class="risk-panel" role="tabpanel" id="rp-7" aria-labelledby="rt-7" hidden>
-          <p class="wrong"><b>What could go wrong</b>Users try to manipulate the Copilot into unsafe or misleading output.</p>
+          <p class="wrong"><b>What could go wrong</b>Users try to push the Copilot into unsafe or misleading output.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>Every message passes a safety check before the model sees it.</li>
-            <li>Instructions to ignore override attempts, keep its instructions private, and refuse to help conceal non-compliance or mislead regulators.</li>
-            <li>Scope limited to EU AI Act topics, per-user rate limiting, and signed conversation summaries so earlier context can't be forged.</li>
+            <li>Every message gets a safety check; override attempts are refused.</li>
+            <li>Scope limited to the EU AI Act, with rate limiting and signed conversation context.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>Output-side guardrail checks and audit logging.</li></ul>
+          <ul><li>Output-side guardrails and audit logging.</li></ul>
         </div>
 
         <div class="risk-panel" role="tabpanel" id="rp-8" aria-labelledby="rt-8" hidden>
-          <p class="wrong"><b>Why it matters</b>Aegis is itself an AI system, so we follow the same rules we help others meet.</p>
+          <p class="wrong"><b>Why it matters</b>Aegis is itself an AI system, so it follows the rules it helps others meet.</p>
           <h3><span class="chip live">In place today</span></h3>
           <ul>
-            <li>We tell users clearly that they are talking to an AI, in the welcome message and in the Terms.</li>
-            <li>We publish the Terms of Use and document how the Copilot works.</li>
+            <li>Users are told they are talking to an AI, in the chat and the Terms.</li>
+            <li>The Terms are published and how the Copilot works is documented.</li>
           </ul>
           <h3><span class="chip road">On the roadmap</span></h3>
-          <ul><li>Usage logging, and a formal human-review workflow for high-risk conclusions.</li></ul>
+          <ul><li>Usage logging and a human-review workflow for high-risk conclusions.</li></ul>
         </div>
       </div>
     </div>
