@@ -35,6 +35,8 @@ Configuration is split into two places:
 | `lib/pinecone.ts` | 3-namespace vector search (children → propositions → parents), lazy client |
 | `lib/sources.ts` | Context assembly and citation formatting |
 | `components/messages/sources.tsx` | Code-rendered Sources box (from the `data-sources` stream part) |
+| `lib/aegis-blocks.ts` | Parser for the structured blocks the model writes (` ```aegis-summary ` card, ` ```aegis-next ` buttons), plus the Markdown-export conversion and the streaming marker. The block format is specified in `WORKFLOW_PROMPT` (`prompts.ts`); change both together |
+| `components/messages/aegis-blocks.tsx` | Renders those blocks (assessment card, next-step buttons) and the P0/P1/P2 badges in tables; wired into `components/ai-elements/response.tsx` |
 | `lib/citations.ts` | Citation canonicalization (renumbering, debris stripping, list repair) + claim verification (`claimSupported`; legacy quotes via `quoteAppearsIn`) |
 | `lib/ai/routing.ts` | Vendor/model/mode routing |
 | `lib/ai/model-registry.ts` | Supported models and thinking budgets |

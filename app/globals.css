@@ -164,6 +164,64 @@
   }
 }
 
+/* ---------- Aegis answers: typography and tables ----------
+   Streamdown tags every element with data-streamdown, so these rules style
+   assistant replies (Response adds the .aegis-prose class) without touching markup. */
+.aegis-prose { font-size: 0.9375rem; line-height: 1.65; }
+
+/* Section titles (### Why, ### Key obligations, ...): quiet labels with a rule, not big bold headings. */
+.aegis-prose [data-streamdown="heading-3"],
+.aegis-prose [data-streamdown="heading-4"] {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.4rem 0 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ring);
+}
+.aegis-prose [data-streamdown="heading-3"]::after,
+.aegis-prose [data-streamdown="heading-4"]::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.aegis-prose li::marker { color: var(--ring); }
+.aegis-prose [data-streamdown="strong"] { color: var(--foreground); }
+
+/* Quotes become callouts. */
+.aegis-prose [data-streamdown="blockquote"] {
+  margin: 1rem 0;
+  padding: 0.65rem 1rem;
+  border-left: 3px solid var(--ring);
+  border-radius: 0 0.6rem 0.6rem 0;
+  background: var(--accent);
+  color: var(--foreground);
+  font-style: normal;
+}
+
+/* Tables: tinted header, small-caps column titles, zebra rows. */
+.aegis-prose [data-streamdown="table-wrapper"] {
+  margin: 0.75rem 0;
+  border-color: var(--border);
+  border-radius: 0.85rem;
+  background: var(--card);
+}
+.aegis-prose [data-streamdown="table-header"] { background: var(--secondary); }
+.aegis-prose [data-streamdown="table-header-cell"] {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.aegis-prose [data-streamdown="table-body"] [data-streamdown="table-row"]:nth-child(even) { background: color-mix(in srgb, var(--muted) 55%, transparent); }
+.aegis-prose [data-streamdown="table-cell"] { vertical-align: top; }
+
 /* Hide [blocked] text that rehype-harden injects for empty/invalid links */
 a[href=""] + :not(*),
 a:empty::after {

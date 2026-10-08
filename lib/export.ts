@@ -1,5 +1,6 @@
 import type { UIMessage } from "ai";
 import { rewriteCitationsInParts } from "@/lib/citations";
+import { blocksToMarkdown } from "@/lib/aegis-blocks";
 import type { UISource } from "@/types/data";
 
 export type ExportOptions = {
@@ -47,8 +48,11 @@ function turnToMarkdown(message: UIMessage, opts: ExportOptions): string | null 
   if (message.id.startsWith(WELCOME_PREFIX)) return null;
   if (message.role !== "user" && message.role !== "assistant") return null;
 
+  // The summary card / next-step buttons are UI blocks: flatten them to plain Markdown first.
   const texts =
-    message.role === "assistant" ? rewriteCitationsInParts(textParts(message)) : textParts(message);
+    message.role === "assistant"
+      ? rewriteCitationsInParts(textParts(message).map(blocksToMarkdown))
+      : textParts(message);
   const body = texts.map((t) => t.trim()).filter(Boolean).join("\n\n");
   if (!body) return null;
 

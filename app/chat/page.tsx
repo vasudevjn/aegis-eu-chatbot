@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { ThinkingIndicator } from "@/components/ai-elements/thinking-indicator";
 import { MessageWall } from "@/components/messages/message-wall";
+import { ChatActionsContext } from "@/components/messages/aegis-blocks";
 import { ChatHeader, ChatHeaderBlock } from "@/app/parts/chat-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState, useRef, useCallback } from "react";
@@ -397,18 +398,23 @@ export default function Chat() {
           <div className="flex min-h-full flex-col items-center justify-end">
             {isClient && (
               <>
-                <MessageWall
-                  messages={messages}
-                  status={status}
-                  durations={durations}
-                  conversationId={activeConvId ?? undefined}
-                  onDurationChange={(k, d) =>
-                    setDurations((prev) => ({
-                      ...prev,
-                      [k]: d,
-                    }))
-                  }
-                />
+                {/* Lets the next-step buttons inside answers send a message (see aegis-blocks.tsx). */}
+                <ChatActionsContext.Provider
+                  value={{ send: (text) => sendMessage({ text }), busy: status !== "ready" }}
+                >
+                  <MessageWall
+                    messages={messages}
+                    status={status}
+                    durations={durations}
+                    conversationId={activeConvId ?? undefined}
+                    onDurationChange={(k, d) =>
+                      setDurations((prev) => ({
+                        ...prev,
+                        [k]: d,
+                      }))
+                    }
+                  />
+                </ChatActionsContext.Provider>
                 {status === "submitted" && (
                   <div className="max-w-3xl w-full">
                     <ThinkingIndicator isCompacting={(() => {
