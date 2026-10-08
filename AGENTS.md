@@ -78,10 +78,9 @@ stream part, rendered by `components/messages/sources.tsx` as the SINGLE referen
 ## Ingestion
 
 Content is ingested via `RAGloader/RAG_loader_pipeline.ipynb`, which imports its
-classes and functions from `RAGloader/myAI6_RAG.py`. See README for pipeline
-documentation (stages incl. formula-to-LaTeX repair, content types,
-Cloudinary/SFTP image hosting, index utilities). Notebooks must never be
-committed with API keys or other credentials filled in.
+classes and functions from `RAGloader/myAI6_RAG.py`. See the "Knowledge base" section
+of the README. Notebooks must never be committed with API keys or other
+credentials filled in.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

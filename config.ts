@@ -143,7 +143,7 @@ export const PINECONE_VISUALS_PER_SOURCE = 20; // max figure/table chunks merged
 // --- Knowledge Base Scope (tells the model what topics are indexed) ---
 // Describes the Pinecone document library, Aegis's PRIMARY source. It is inserted
 // into the model's instructions, so it must match what is actually ingested: update
-// this list whenever you ingest or remove content (see README "Building the document library").
+// this list whenever you ingest or remove content (see README, "Knowledge base").
 export const KB_SCOPE = `
 The document library holds the text of Regulation (EU) 2024/1689 (the AI Act): recitals, articles and annexes.
 It is the text as originally adopted and does NOT reflect later amendments such as the Digital Omnibus on AI (Regulation (EU) 2026/1744). For dates, applicability and amendments, the built-in reference governs where the two differ.
